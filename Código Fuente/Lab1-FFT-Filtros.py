@@ -139,6 +139,8 @@ def main():
     ifft_lpf = transformada_inversa(fft_lpf)
     espectrograma(ifft_lpf, fs, 'Espectrograma del audio leído con filtro paso bajo de ' + str(corte_paso_bajo) + 'Hz')
     espectrograma(fft_lpf, fs, 'Espectrograma del audio leído en Frecuencia con filtro paso bajo de ' + str(corte_paso_bajo) + 'Hz')
+    graficar(arreglo, ifft_lpf, 'indianred', 'Grafico Amplitud vs. Tiempo del audio leído filtrado paso bajo')
+    sc.io.wavfile.write(nombre + '-LowPassFilter.wav', fs, ifft_lpf.real)
 
     valor_corte_paso_alto = input('Ingrese el valor de frecuencia de corte para el filtro paso alto en Hz (i.e. 7000): ')
     corte_paso_alto = int(valor_corte_paso_alto)
@@ -147,6 +149,8 @@ def main():
     ifft_hpf = transformada_inversa(fft_hpf)
     espectrograma(ifft_hpf, fs, 'Espectrograma del audio leído con filtro paso alto de ' + str(corte_paso_alto) + 'Hz')
     espectrograma(fft_hpf, fs, 'Espectrograma del audio leído en Frecuencia con filtro paso alto de ' + str(corte_paso_alto) + 'Hz')
+    graficar(arreglo, ifft_hpf, 'indianred', 'Grafico Amplitud vs. Tiempo del audio leído filtrado paso alto')
+    sc.io.wavfile.write(nombre + '-HighPassFilter.wav', fs, ifft_hpf.real)
 
     valor_banda_bajo = input('Ingrese el valor de frecuencia de corte baja para el filtro paso banda en Hz (i.e. 2000): ')
     banda_bajo = int(valor_banda_bajo)
@@ -157,14 +161,17 @@ def main():
     ifft_bpf = transformada_inversa(fft_bpf)
     espectrograma(ifft_bpf, fs, 'Espectrograma del audio leído con filtro paso banda entre ' + str(banda_bajo) + 'Hz y ' + str(banda_alto) + 'Hz')
     espectrograma(fft_bpf, fs, 'Espectrograma del audio leído en Frecuencia con filtro paso banda entre ' + str(banda_bajo) + 'Hz y ' + str(banda_alto) + 'Hz')
+    graficar(arreglo, ifft_bpf, 'indianred', 'Grafico Amplitud vs. Tiempo del audio leído filtrado paso banda')
+    sc.io.wavfile.write(nombre + '-BandPassFilter.wav', fs, ifft_bpf.real)
 
     fft_mbf = filtro_multi_banda(fs, fftAudioOriginal)
     graficarFFT(fft_freqs, fft_mbf, 'g', 'Grafico FFT vs. Frecuencia de la transformada del audio leído con filtro multi banda')
     ifft_mbf = transformada_inversa(fft_mbf)
     espectrograma(ifft_mbf, fs, 'Espectrograma del audio leído con filtro multi banda')
     espectrograma(fft_mbf, fs, 'Espectrograma del audio leído en Frecuencia con filtro multi banda')
+    graficar(arreglo, ifft_mbf, 'indianred', 'Grafico Amplitud vs. Tiempo del audio leído filtrado multi banda')
+    sc.io.wavfile.write(nombre + '-MultiBandFilter.wav', fs, ifft_mbf.real)
 
     #Falta comparar espectrogramas en FFT con actuales, comparar los 3 espectrogramas,
-    #guardar los nuevos audios.
 
 main();
