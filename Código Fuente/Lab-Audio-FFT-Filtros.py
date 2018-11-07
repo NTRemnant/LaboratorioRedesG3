@@ -151,7 +151,7 @@ def main():
     # Se grafica la señal de acuerdo a la frecuencia.
     graficarFFT(fft_freqs, fftAudioOriginal, 'indianred', 'Grafico FFT vs. Frecuencia de la transformada del audio leído')
     # Se grafica el espectrograma de la señal original.
-    espectrograma(senal, fs, 'Espectrograma del audio leído')
+    espectrograma(fftAudioOriginal, fs, 'Espectrograma del audio leído')
 
     valor_corte_paso_bajo = input('Ingrese el valor de frecuencia de corte para el filtro paso bajo en Hz (i.e. 2000): ')
     corte_paso_bajo = int(valor_corte_paso_bajo)
@@ -160,7 +160,7 @@ def main():
     graficarFFT(fft_freqs, fft_lpf, 'y', 'Grafico FFT vs. Frecuencia de la transformada del audio leído con filtro paso bajo de ' + str(corte_paso_bajo) + 'Hz')
     ifft_lpf = transformada_inversa(fft_lpf)
     # Se grafica el espectrograma de la señal original filtrada por filtro paso bajo.
-    espectrograma(ifft_lpf, fs, 'Espectrograma del audio leído con filtro paso bajo de ' + str(corte_paso_bajo) + 'Hz')
+    # espectrograma(ifft_lpf, fs, 'Espectrograma del audio leído con filtro paso bajo de ' + str(corte_paso_bajo) + 'Hz')
     # Se grafica el espectrograma de la fft de la señal original para comprobar la aplicación del corte.
     espectrograma(fft_lpf, fs, 'Espectrograma del audio leído en Frecuencia con filtro paso bajo de ' + str(corte_paso_bajo) + 'Hz')
     # Se grafica la señal filtrada con filtro paso bajo de acuerdo al tiempo.
@@ -172,10 +172,10 @@ def main():
     corte_paso_alto = int(valor_corte_paso_alto)
     fft_hpf = filtro_paso_alto(fs, fftAudioOriginal, corte_paso_alto)
     # Se grafica la señal de acuerdo a la frecuencia post filtro paso alto.
-    graficarFFT(fft_freqs, fft_hpf, 'g', 'Grafico FFT vs. Frecuencia de la transformada del audio leído con filtro paso alto de ' + str(corte_paso_bajo) + 'Hz')
+    graficarFFT(fft_freqs, fft_hpf, 'g', 'Grafico FFT vs. Frecuencia de la transformada del audio leído con filtro paso alto de ' + str(corte_paso_alto) + 'Hz')
     ifft_hpf = transformada_inversa(fft_hpf)
     # Se grafica el espectrograma de la señal original filtrada por filtro paso alto.
-    espectrograma(ifft_hpf, fs, 'Espectrograma del audio leído con filtro paso alto de ' + str(corte_paso_alto) + 'Hz')
+    # espectrograma(ifft_hpf, fs, 'Espectrograma del audio leído con filtro paso alto de ' + str(corte_paso_alto) + 'Hz')
     # Se grafica el espectrograma de la fft de la señal original para comprobar la aplicación del corte.
     espectrograma(fft_hpf, fs, 'Espectrograma del audio leído en Frecuencia con filtro paso alto de ' + str(corte_paso_alto) + 'Hz')
     # Se grafica la señal filtrada con filtro paso alto de acuerdo al tiempo.
@@ -192,7 +192,7 @@ def main():
     graficarFFT(fft_freqs, fft_bpf, 'g', 'Grafico FFT vs. Frecuencia de la transformada del audio leído con filtro paso banda entre ' + str(banda_bajo) + 'Hz y ' + str(banda_alto) + 'Hz')
     ifft_bpf = transformada_inversa(fft_bpf)
     # Se grafica el espectrograma de la señal original filtrada por filtro paso banda.
-    espectrograma(ifft_bpf, fs, 'Espectrograma del audio leído con filtro paso banda entre ' + str(banda_bajo) + 'Hz y ' + str(banda_alto) + 'Hz')
+    #espectrograma(ifft_bpf, fs, 'Espectrograma del audio leído con filtro paso banda entre ' + str(banda_bajo) + 'Hz y ' + str(banda_alto) + 'Hz')
     # Se grafica el espectrograma de la fft de la señal original para comprobar la aplicación del corte.
     espectrograma(fft_bpf, fs, 'Espectrograma del audio leído en Frecuencia con filtro paso banda entre ' + str(banda_bajo) + 'Hz y ' + str(banda_alto) + 'Hz')
     # Se grafica la señal filtrada con filtro paso banda de acuerdo al tiempo.
@@ -205,7 +205,7 @@ def main():
     graficarFFT(fft_freqs, fft_mbf, 'g', 'Grafico FFT vs. Frecuencia de la transformada del audio leído con filtro multi banda')
     ifft_mbf = transformada_inversa(fft_mbf)
     # Se grafica el espectrograma de la señal original filtrada por filtro multi banda.
-    espectrograma(ifft_mbf, fs, 'Espectrograma del audio leído con filtro multi banda')
+    # espectrograma(ifft_mbf, fs, 'Espectrograma del audio leído con filtro multi banda')
     # Se grafica el espectrograma de la fft de la señal original para comprobar la aplicación del corte.
     espectrograma(fft_mbf, fs, 'Espectrograma del audio leído en Frecuencia con filtro multi banda')
     # Se grafica la señal filtrada con filtro multi banda de acuerdo al tiempo.
