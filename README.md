@@ -7,16 +7,21 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
 - Sebastián Pasutti
 - Alberto Pizarro
 
-## Indice
+## Indice 
 
 - [Etapa 1: Análisis  de señales](#etapa-1-an%C3%A1lisis--de-se%C3%B1ales)
   - [Objetivos](#objetivos)
   - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega)
   - [Análisis de resultados](#an%C3%A1lisis-de-resultados)
-- [Tecnología utilizada](#tecnolog%C3%ADa-utilizada)
-- [Modo de uso](#modo-de-uso) 
+  - [Tecnología utilizada](#tecnolog%C3%ADa-utilizada)
+      - [Software](#software)
+      - [OS](#os)
+  - [Modo de uso](#modo-de-uso) 
 
 ## Etapa 1: Análisis  de señales
+
+La transformada de Fourier es una transformación matemática de una función en base al tiempo a otra función en base a la frecuencia, con aplicaciones para el envío y tratamiento de datos. Un ejemplo práctico de esto se da 
+en los radiotelescopios que reciben ondas de radio que representan el aspecto y estado del firmamento en un lugar determinado, con un alcance superior a cualquier telescopio óptico existente.
 
 ### Objetivos
 El objetivo que nos fue entrega corresponde a crear un programa en el lenguaje de programación Python, que sea capaz de analizar y procesar señales en el dominio del tiempo y en el de la frecuencia.
@@ -33,15 +38,51 @@ Específicamente, se nos pide crear:
 Como material para probar nuestros programas, se nos proveyó de archivos de audio de comunicaciones reales y otros simulados que debieron ser analizados para eliminar el ruido y aquellas bandas inaudibles.
 
 ### Caracteristicas de la entrega 
-  - Carac 2
+  - Se implementa la función **leer audio** que obtiene y almacena un audio en formato *.wav* para futuro uso.
+  - Se implementan las funciones para graficar los datos obtenidos por los audios.
+  - Se implementan funciones para generar filtros pasa baja, pasa alta y pasa banda.
   
 ### Análisis de resultados
 
-![Gráfico Amplitud vs. Tiempo](/Images/Etapa1/Prueba_A_1.jpg.jpg)
+Estos son los gráficos obtenidos al analizar el audio original obtenido:
 
-![Diagrama de clases](/Images/Etapa1/Prueba_A_2.jpg.jpg)
+![Gráfico Amplitud vs. Tiempo](Images/Etapa1/Prueba_A_1.jpg)
 
-![Diagrama de clases](/Images/Etapa1/Prueba_A_3.jpg.jpg)
+![Gráfico FFT vs. Frecuencia ](Images/Etapa1/Prueba_A_2.jpg)
+
+![Espectograma del gráfico leído](Images/Etapa1/Prueba_A_3.jpg)
+
+Estos son los gráficos obtenidos al pasar el audio original a través de un filtro pasa baja:
+
+![Gráfico FFT vs. Frecuencia con filtro pasa baja](Images/Etapa1/Prueba_A_f_baja_1.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_baja_2.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_baja_3.jpg)
+
+Estos son los gráficos obtenidos al pasar el audio original a través de un filtro pasa alta:
+
+![Gráfico Amplitud vs. Tiempo](Images/Etapa1/Prueba_A_f_alta_1.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_alta_2.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_alta_3.jpg)
+
+Estos son los gráficos obtenidos al pasar el audio original a través de un filtro pasa banda:
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_1.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_2.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_3.jpg)
+
+Estos son los gráficos obtenidos al pasar el audio original a través de un filtro multi pasa banda:
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_4.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_5.jpg)
+
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_6.jpg)
 
 
 ### Tecnología utilizada
