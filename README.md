@@ -46,43 +46,43 @@ Como material para probar nuestros programas, se nos proveyó de archivos de aud
 
 Estos son los gráficos obtenidos al analizar el audio original obtenido:
 
-![Gráfico Amplitud vs. Tiempo](Images/Etapa1/Prueba_A_1.jpg)
+![Gráfico Amplitud vs. Tiempo](Images/Etapa1/Prueba_A_1.png)
 
-![Gráfico FFT vs. Frecuencia ](Images/Etapa1/Prueba_A_2.jpg)
+![Gráfico FFT vs. Frecuencia ](Images/Etapa1/Prueba_A_2.png)
 
-![Espectograma del gráfico leído](Images/Etapa1/Prueba_A_3.jpg)
+![Espectograma del gráfico leído](Images/Etapa1/Prueba_A_3.png)
 
 Estos son los gráficos obtenidos al pasar el audio original a través de un filtro pasa baja:
 
-![Gráfico FFT vs. Frecuencia con filtro pasa baja](Images/Etapa1/Prueba_A_f_baja_1.jpg)
+![Gráfico FFT vs. Frecuencia con filtro pasa baja](Images/Etapa1/Prueba_A_f_baja_1.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_baja_2.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_baja_2.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_baja_3.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_baja_3.png)
 
 Estos son los gráficos obtenidos al pasar el audio original a través de un filtro pasa alta:
 
-![Gráfico Amplitud vs. Tiempo](Images/Etapa1/Prueba_A_f_alta_1.jpg)
+![Gráfico Amplitud vs. Tiempo](Images/Etapa1/Prueba_A_f_alta_1.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_alta_2.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_alta_2.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_alta_3.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_alta_3.png)
 
 Estos son los gráficos obtenidos al pasar el audio original a través de un filtro pasa banda:
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_1.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_1.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_2.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_2.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_3.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_3.png)
 
 Estos son los gráficos obtenidos al pasar el audio original a través de un filtro multi pasa banda:
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_4.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_4.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_5.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_5.png)
 
-![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_6.jpg)
+![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_6.png)
 
 
 ### Tecnología utilizada
