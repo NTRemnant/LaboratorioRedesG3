@@ -7,7 +7,7 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
 - Sebastián Pasutti
 - Alberto Pizarro
 
-## Indice 
+## Indice
 
 - [Etapa 1: Análisis  de señales](#etapa-1-an%C3%A1lisis--de-se%C3%B1ales)
   - [Objetivos](#objetivos)
@@ -16,11 +16,11 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
   - [Tecnología utilizada](#tecnolog%C3%ADa-utilizada)
       - [Software](#software)
       - [OS](#os)
-  - [Modo de uso](#modo-de-uso) 
+  - [Modo de uso](#modo-de-uso)
 
 ## Etapa 1: Análisis  de señales
 
-La transformada de Fourier es una transformación matemática de una función en base al tiempo a otra función en base a la frecuencia, con aplicaciones para el envío y tratamiento de datos. Un ejemplo práctico de esto se da 
+La transformada de Fourier es una transformación matemática de una función en base al tiempo a otra función en base a la frecuencia, con aplicaciones para el envío y tratamiento de datos. Un ejemplo práctico de esto se da
 en los radiotelescopios que reciben ondas de radio que representan el aspecto y estado del firmamento en un lugar determinado, con un alcance superior a cualquier telescopio óptico existente.
 
 ### Objetivos
@@ -37,11 +37,11 @@ Específicamente, se nos pide crear:
 
 Como material para probar nuestros programas, se nos proveyó de archivos de audio de comunicaciones reales y otros simulados que debieron ser analizados para eliminar el ruido y aquellas bandas inaudibles.
 
-### Caracteristicas de la entrega 
+### Caracteristicas de la entrega
   - Se implementa la función **leer audio** que obtiene y almacena un audio en formato *.wav* para futuro uso.
   - Se implementan las funciones para graficar los datos obtenidos por los audios.
   - Se implementan funciones para generar filtros pasa baja, pasa alta y pasa banda.
-  
+
 ### Análisis de resultados
 
 Estos son los gráficos obtenidos al analizar el audio original obtenido:
@@ -100,7 +100,7 @@ Se utilizaron las siguientes tecnologías y librerías para construir el proyect
 
 
 Programas probados en:
-* MacOS High Sierra
+* MacOS Mojave
 * Ubuntu 18.04
 * Linux Mint 19 Cinnamon 3.8.9
 
@@ -114,8 +114,8 @@ El programa requiere tener instaladas las librerías anteriormente mencionadas j
         alberto@Note-CX61-2QF:~/Documentos/Redes/LAB 1$ python3 Lab-1.py
 
 - Aparecerá un mensaje como este:
-        
-        Ingrese la ruta del archivo .wav: 
+
+        Ingrese la ruta del archivo .wav:
 
 - Una vez escrito el nombre, presione el botón ENTER para ejecutar el programa:
 
