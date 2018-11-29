@@ -85,22 +85,22 @@ def multi_grafico_tiempo(rango, senal_1, title_1, senal_2, title_2, senal_3, tit
     mplot.title(title_1)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_1)
+    mplot.plot(rango, senal_1, 'y')
     mplot.subplot(412)
     mplot.title(title_2)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_2)
+    mplot.plot(rango, senal_2, 'green')
     mplot.subplot(413)
     mplot.title(title_3)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_3)
+    mplot.plot(rango, senal_3, 'blue')
     mplot.subplot(414)
     mplot.title(title_4)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_4)
+    mplot.plot(rango, senal_4, 'indianred')
     mplot.show()
 
 
@@ -130,7 +130,7 @@ def main():
     portadora_A1  = fx_portadora(15*fs, 1.0, rango_senal)
     portadora_A12 = fx_portadora(15*fs, 1.8, rango_senal)
 
-    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', portadora_A08, 'Amplitud vs Tiempo Portadora 80%', portadora_A1, 'Amplitud vs Tiempo Portadora 100%', portadora_A12, 'Amplitud vs Tiempo Portadora 120%')
+    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', portadora_A08, 'Amplitud vs Tiempo Portadora 20%', portadora_A1, 'Amplitud vs Tiempo Portadora 100%', portadora_A12, 'Amplitud vs Tiempo Portadora 180%')
 
     # graficar_tiempo(rango_senal, portadora_A08, 'indianred', 'Grafico Amplitud vs. Tiempo de función portadora')
 
@@ -138,7 +138,7 @@ def main():
     modulacion_A1 = modulacion_am(senal, portadora_A1)
     modulacion_A12 = modulacion_am(senal, portadora_A12)
 
-    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Portadora 80%', modulacion_A1, 'Amplitud vs Tiempo Portadora 100%', modulacion_A12, 'Amplitud vs Tiempo Portadora 120%')
+    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Modulación 20%', modulacion_A1, 'Amplitud vs Tiempo Modulación 100%', modulacion_A12, 'Amplitud vs Tiempo Modulación 180%')
 
     # graficar_tiempo(rango_senal, modulacion_A08, 'indianred', 'Grafico Amplitud vs. Tiempo de Modulada AM')
 
