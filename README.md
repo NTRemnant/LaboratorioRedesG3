@@ -8,23 +8,29 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
 - Alberto Pizarro
 
 ## Indice
-
+ 
 - [Etapa 1: Análisis  de señales](#etapa-1-an%C3%A1lisis--de-se%C3%B1ales)
   - [Objetivos](#objetivos)
   - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega)
   - [Análisis de resultados](#an%C3%A1lisis-de-resultados)
-  - [Tecnología utilizada](#tecnolog%C3%ADa-utilizada)
-      - [Software](#software)
-      - [OS](#os)
-  - [Modo de uso](#modo-de-uso)
+- [Etapa 2: Modulación AM/FM](#etapa-2-modulaci%C3%B3n-amfm)
+  - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega-1)
+  - [Análisis de resultados](#an%C3%A1lisis-de-resultados-1)
+- [Tecnología utilizada](#tecnolog%C3%ADa-utilizada)
+    - [Software](#software)
+    - [OS](#os)
+- [Modo de uso](#modo-de-uso)
 
 ## Etapa 1: Análisis  de señales
 
-La transformada de Fourier es una transformación matemática de una función en base al tiempo a otra función en base a la frecuencia, con aplicaciones para el envío y tratamiento de datos. Un ejemplo práctico de esto se da
-en los radiotelescopios que reciben ondas de radio que representan el aspecto y estado del firmamento en un lugar determinado, con un alcance superior a cualquier telescopio óptico existente.
+La transformada de Fourier es una transformación matemática de una función en base al tiempo a otra función en base a
+la frecuencia, con aplicaciones para el envío y tratamiento de datos. Un ejemplo práctico de esto se da en los 
+radiotelescopios que reciben ondas de radio que representan el aspecto y estado del firmamento en un lugar determinado,
+con un alcance superior a cualquier telescopio óptico existente.
 
 ### Objetivos
-El objetivo que nos fue entrega corresponde a crear un programa en el lenguaje de programación Python, que sea capaz de analizar y procesar señales en el dominio del tiempo y en el de la frecuencia.
+El objetivo que nos fue entrega corresponde a crear un programa en el lenguaje de programación Python, que sea capaz 
+de analizar y procesar señales en el dominio del tiempo y en el de la frecuencia.
 
 Específicamente, se nos pide crear:
 >1.-Módulos para leer y grabar archivos.
@@ -35,7 +41,8 @@ Específicamente, se nos pide crear:
 
 >4.-Documentación de experimentos realizados y sus resultados.
 
-Como material para probar nuestros programas, se nos proveyó de archivos de audio de comunicaciones reales y otros simulados que debieron ser analizados para eliminar el ruido y aquellas bandas inaudibles.
+Como material para probar nuestros programas, se nos proveyó de archivos de audio de comunicaciones reales y otros 
+simulados que debieron ser analizados para eliminar el ruido y aquellas bandas inaudibles.
 
 ### Caracteristicas de la entrega
   - Se implementa la función **leer audio** que obtiene y almacena un audio en formato *.wav* para futuro uso.
@@ -85,10 +92,42 @@ Estos son los gráficos obtenidos al pasar el audio original a través de un fil
 ![Diagrama de clases](Images/Etapa1/Prueba_A_f_band_6.png)
 
 
-### Tecnología utilizada
+## Etapa 2: Modulación AM/FM
+
+Para poder enviar señales al entorno sin causar interferencias entre las mismas, es necesario modificarlas sin 
+cambiar el mensaje que portan originalmente, a este proceso se le conoce como modulación. 
+
+Si se tiene inicialmente una señal moduladora <em>'x'</em> que varia en el tiempo, que se desea enviar por una sección 
+de un medio "ocupado" por otra señal, esta señal debe ser modificada usando una nueva señal portadora <em>'y'</em>, de
+modo tal que la señal portadora, la cual ahora contiene el mensaje de la señal moduladora inicial pueda ser enviada por una nueva
+sección de ese medio, vale decir, a un canal nuevo por el cual pueda ser enviado sin interferencias entre mensajes.
+
+Suponiendo ahora una señal portadora <em>'y'</em> que varia en el tiempo bajo el formato <em>  y(t) = A cos(W<sub>c</sub> + 	&phi;) </em>   ; en donde A, W<sub>c</sub>, &phi; corresponden a la amplitud, 
+frecuencia de corte y frecuencia de fase de una señal respectivamente, se puede "insertar" el mensaje contenido en una señal
+moduladora <em>'x'</em>, modificando alguno de estos valores de forma continua, de este modo se originan 3 tipos de 
+modulación: Amplitude Modulation (AM), frequency Modulation (FM) y Phase Modulation (PM).
+
+Para modular una señal por amplitud modulada la señal portadora queda de la siguiente forma:
+
+y(t) = A(t) cos(W<sub>c</sub> + 	&phi;) </em>   
+
+   
+
+
+### Caracteristicas de la entrega
+  - Se implementan módulos para modular y demodular audio usando modulación AM
+  - Se implementan módulos para modular audio usando modulación FM
+
+Como material para probar nuestros programas, se nos proveyó de un nuevo archivo de audio adicional a los usados
+para la entrega pasada, el cual corresponde a un fragmento de la obra **<em>El Mesías HWV 56 (Messiah - Der Messias)
+</em>**, creado por el compositor <em>Georg Friedrich Händel</em> en el año 1741.
+
+### Análisis de resultados
+
+## Tecnología utilizada
 Se utilizaron las siguientes tecnologías y librerías para construir el proyecto:
 
-##### Software
+#### Software
 * [PyCharm](https://www.jetbrains.com/pycharm/download/#section=linux) - IDE especializado en proyectos de Python
 * [Python 3.0](https://www.python.org/download/releases/3.0/)  - Lenguaje de programación
 * [NumPy](http://www.numpy.org/)   - Librería Python para calculo matricial y análisis cientifico
@@ -96,7 +135,7 @@ Se utilizaron las siguientes tecnologías y librerías para construir el proyect
 * [PIL](https://pypi.org/project/PIL/) - Librería python para manejo especializado de imagenes
 * [Matplotlib](https://matplotlib.org/) - Librería Python para feneración de gráficas
 
-##### OS
+#### OS
 
 
 Programas probados en:
@@ -105,7 +144,7 @@ Programas probados en:
 * Linux Mint 19 Cinnamon 3.8.9
 
 
-### Modo de uso
+## Modo de uso
 
 El programa requiere tener instaladas las librerías anteriormente mencionadas junto con Python 3.6 o superior. Para su ejecución, seguir los los pasos descritos a continuación:
 
