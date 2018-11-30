@@ -62,7 +62,7 @@ def modulacion_am(senal, portadora):
 
 def demodulacion_am(modulacion, portadora):
     #Demodular AM
-    demodulacion = modulacion * portadora
+    demodulacion = (modulacion/portadora)/40000
     return demodulacion
 
 def graficar_tiempo(rango_senal, senal, color, title):
@@ -104,6 +104,7 @@ def multi_grafico_tiempo(rango, senal_1, title_1, senal_2, title_2, senal_3, tit
     mplot.show()
 
 
+
 def main():
 
     # nombre = input('Ingrese el nombre del archivo .wav a trabajar: ')
@@ -142,9 +143,17 @@ def main():
 
     # graficar_tiempo(rango_senal, modulacion_A08, 'indianred', 'Grafico Amplitud vs. Tiempo de Modulada AM')
 
-    # demodulacion = demodulacion_am(modulacion_A12, portadora_A08)
+    demodulacion = demodulacion_am(modulacion_A1, portadora_A1)
 
-    # graficar_tiempo(rango_senal, demodulacion, 'indianred', 'Grafico Amplitud vs. Tiempo de Demodulada AM')
+    graficar_tiempo(rango_senal, demodulacion, 'indianred', 'Grafico Amplitud vs. Tiempo de Demodulada AM')
+
+
+    fft_lpf = filtro_paso_bajo(8*fs, demodulacion, 20000)
+
+    graficar_tiempo(rango_senal, fft_lpf, 'indianred', 'Grafico Amplitud vs. Tiempo de Demodulada pasa bajo AM')
+
+
+    scipy.io.wavfile.write('dem1.wav',fs, fft_lpf)
 
     return 0
 
