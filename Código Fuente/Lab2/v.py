@@ -126,11 +126,13 @@ def multi_grafico_comparativo(rango, senal_1, title_1, senal_2, title_2, senal_3
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
     mplot.plot(rango, senal_3, 'blue')
+    mplot.plot(rango, senal_1, 'indianred')
     mplot.subplot(414)
     mplot.title(title_4)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
     mplot.plot(rango, senal_4, 'yellow')
+    mplot.plot(rango, senal_1, 'indianred')
     mplot.show()
 
 def main():
@@ -168,6 +170,8 @@ def main():
     modulacion_A12 = modulacion_am(senal, portadora_A12)
 
     multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Modulación 20%', modulacion_A1, 'Amplitud vs Tiempo Modulación 100%', modulacion_A12, 'Amplitud vs Tiempo Modulación 180%')
+
+    multi_grafico_comparativo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Modulación 20%', modulacion_A1, 'Amplitud vs Tiempo Modulación 100%', modulacion_A12, 'Amplitud vs Tiempo Modulación 180%')
 
 
     # graficar_tiempo(rango_senal, modulacion_A08, 'indianred', 'Grafico Amplitud vs. Tiempo de Modulada AM')
