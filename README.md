@@ -132,7 +132,7 @@ Transformada de la original
 
 
 Original con modulaciones a distintas porcentajes
-![Original con modulaciones](Images/Etapa2/portadora.png)
+![Original con modulaciones](Images/Etapa2/portadoras.png)
 
 
 Original con demodulaciones a distintos porcentajes
