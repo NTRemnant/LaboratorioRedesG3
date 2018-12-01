@@ -148,6 +148,8 @@ Demodulación de la original a distintos modos
 
 Original con modulaciones FM a distintas porcentajes
 ![Original con modulaciones](Images/Etapa2/frecuencias_fm.png)
+![Original con modulaciones](Images/Etapa2/amplitud_fm_3.png)
+
 
 ### Caracteristicas de la entrega
   - Se implementan módulos para modular y demodular audio usando modulación AM
