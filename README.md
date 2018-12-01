@@ -107,11 +107,19 @@ frecuencia de corte y frecuencia de fase de una señal respectivamente, se puede
 moduladora <em>'x'</em>, modificando alguno de estos valores de forma continua, de este modo se originan 3 tipos de 
 modulación: Amplitude Modulation (AM), frequency Modulation (FM) y Phase Modulation (PM).
 
-Para modular una señal por amplitud modulada la señal portadora queda de la siguiente forma:
+Para modular una señal por amplitud modulada (AM) la señal portadora queda de la siguiente forma:
 
-y(t) = A(t) cos(W<sub>c</sub> + 	&phi;) </em>   
+<em>  y(t) = A(t) cos(W<sub>c</sub> + &phi;) </em>  ; tal que <em> A(t) = k X(t) </em>, k cte
 
-   
+
+Para modular una señal por frecuencia modulada (FM) la señal portadora modifica su frecuencia instantanea
+ de la siguiente forma:
+ 
+ <em>d&phi;(t)/dt = k x(t)</em>, k cte
+ 
+Finalmente para modular la señal por fase modulada (PM) la señal portadora modifica su fase de la siguiente forma:
+
+ <em>&phi;(t) = k x(t)</em>, k cte
 
 
 ### Caracteristicas de la entrega
