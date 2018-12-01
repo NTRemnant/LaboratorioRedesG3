@@ -92,24 +92,48 @@ def multi_grafico_tiempo(rango, senal_1, title_1, senal_2, title_2, senal_3, tit
     mplot.figure()
     mplot.subplot(411)
     mplot.title(title_1)
+    mplot.xlabel('Frecuencia [Hz]')
+    mplot.ylabel('FFT')
+    mplot.plot(rango, senal_1, 'y')
+    mplot.subplot(412)
+    mplot.title(title_2)
+    mplot.xlabel('Frecuencia [Hz]')
+    mplot.ylabel('FFT')
+    mplot.plot(rango, senal_2, 'green')
+    mplot.subplot(413)
+    mplot.title(title_3)
+    mplot.xlabel('Frecuencia [Hz]')
+    mplot.ylabel('FFT')
+    mplot.plot(rango, senal_3, 'blue')
+    mplot.subplot(414)
+    mplot.title(title_4)
+    mplot.xlabel('Frecuencia [Hz]')
+    mplot.ylabel('FFT')
+    mplot.plot(rango, senal_4, 'indianred')
+    mplot.show()
+
+def multi_grafico_frecuencia(freqs, senal_1, title_1, senal_2, title_2, senal_3, title_3, senal_4, title_4):
+    mplot.figure()
+    mplot.subplot(411)
+    mplot.title(title_1)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_1, 'y')
+    mplot.plot(freqs, abs(senal_1), 'y')
     mplot.subplot(412)
     mplot.title(title_2)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_2, 'green')
+    mplot.plot(freqs, abs(senal_2), 'green')
     mplot.subplot(413)
     mplot.title(title_3)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_3, 'blue')
+    mplot.plot(freqs, abs(senal_3), 'blue')
     mplot.subplot(414)
     mplot.title(title_4)
     mplot.xlabel('Tiempo [s]')
     mplot.ylabel('Amplitud [dB]')
-    mplot.plot(rango, senal_4, 'indianred')
+    mplot.plot(freqs, abs(senal_4), 'indianred')
     mplot.show()
 
 def multi_grafico_comparativo(rango, senal_1, title_1, senal_2, title_2, senal_3, title_3, senal_4, title_4):
@@ -184,8 +208,14 @@ def main():
     modulacion_F1  = modulacion_fm(senal, rango_senal, 25000, 44100, 1.0)
     modulacion_F12 = modulacion_fm(senal, rango_senal, 25000, 44100, 1.2)
 
+    fft_modulacion_F08 = transformada(modulacion_F08)
+    fft_modulacion_F1  = transformada(modulacion_F1)
+    fft_modulacion_F12 = transformada(modulacion_F12)
+
+    multi_grafico_frecuencia(freqs, fftAudioOriginal, 'FFT vs Frecuecia Audio Original', fft_modulacion_F08, 'FFT vs Frecuecia Modulación FM 80%', fft_modulacion_F1, 'FFT vs Frecuecia Modulación FM 100%', fft_modulacion_F12, 'FFT vs Frecuecia Modulación FM 120%')
+
     multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original',
-                         modulacion_F08, 'Amplitud vs Tiempo Modulación k = 80%', modulacion_F1, 'Amplitud vs Tiempo Modulación 100%',
+                         modulacion_F08, 'Amplitud vs Tiempo Modulación 80%', modulacion_F1, 'Amplitud vs Tiempo Modulación 100%',
                          modulacion_F12, 'Amplitud vs Tiempo Modulación 120%')
 
 
