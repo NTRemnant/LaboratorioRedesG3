@@ -1,12 +1,9 @@
 import scipy as sc
 import scipy.io.wavfile
-import wave
-from scipy.fftpack import fftfreq, ifftshift, fftshift
-from scipy.signal import kaiserord, lfilter, firwin, freqz
+from scipy.fftpack import fftfreq
+from scipy.signal import lfilter, firwin
 import scipy.integrate as intgrl
-import numpy as np
-from numpy import cos, pi, sin, linspace
-import matplotlib as mp
+from numpy import cos, pi, linspace
 import matplotlib.pyplot as mplot
 
 # La función leer_audio se encarga de abrir el archivo a partir de una dirección pedida por pantalla.
@@ -48,23 +45,37 @@ def transformada_inversa(senal):
     inversaFft = sc.ifft(senal)
     return inversaFft
 
+# Función que genera un array de largo x interespaciado entre 0 a "tpo"
+# Reccibe el largo x del array y la distancia tpo
 def rango_data(tpo, x):
     rango_senal = linspace(0, tpo, x)
     return rango_senal
 
+# Funcion que genera los puntos de una funcion coseno portadora
+# Recibe la frecuencia w0 y la amplitud A de la portadora, tambien recibe los valores de t sobre el cual se evaluara la funcion
+# Devuelve una serie de puntos que pasan por la señal portadora
 def fx_portadora(Wo, A, rango_portadora):
     portadora = A * cos(2 * pi * Wo * rango_portadora)
     return portadora
 
+# Funcion que realiza modulacion AM
+# Recibe la señal a modular y la señal portadora obtenida con la funcion "fx_portadora"
+# Retorna la señal modulada
 def modulacion_am(senal, portadora):
     modulacion = portadora * senal
     return modulacion
 
+# Funcion que realiza demodulacion AM
+# Recibe la señal a demodular y la señal portadora obtenida con la funcion "fx_portadora"
+# Retorna la señal demodulada
 def demodulacion_am(modulacion, portadora):
     #Demodular AM
     demodulacion = (modulacion/portadora)/40000
     return demodulacion
 
+# Funcion que realiza modulacion FM
+# Recibe la señal a modular, el array de tiempo a evaluar, y la amplitud, frecuencia w0 y k de la señal portadora a generar
+# Retorna la señal modulada
 def modulacion_fm(senal, rango_senal, amplitud, w0, k):
     integral = sc.integrate.cumtrapz(senal, rango_senal, initial=0)
     modulacion = amplitud * cos(w0*2*pi*rango_senal + 2*pi*k*integral)
@@ -80,6 +91,7 @@ def graficar_tiempo(rango_senal, senal, color, title):
     mplot.plot(rango_senal, senal, color)
     mplot.show()
 
+# La funcion graficar_frecuencia grafica frecuencia vs FFT para una señal
 def graficar_frecuencia(rango_senal, senalFFT, freqs, color, title):
     mplot.title(title)
     mplot.xlabel('Frecuencia [Hz]')
@@ -112,6 +124,7 @@ def multi_grafico_tiempo(rango, senal_1, title_1, senal_2, title_2, senal_3, tit
     mplot.plot(rango, senal_4, 'indianred')
     mplot.show()
 
+# La funcion multi_grafico_frecuencia entrega un grafico compartivo FFT en la frecuencia.
 def multi_grafico_frecuencia(freqs, senal_1, title_1, senal_2, title_2, senal_3, title_3, senal_4, title_4):
     mplot.figure()
     mplot.subplot(411)
@@ -136,6 +149,7 @@ def multi_grafico_frecuencia(freqs, senal_1, title_1, senal_2, title_2, senal_3,
     mplot.plot(freqs, abs(senal_4), 'indianred')
     mplot.show()
 
+# La funcion multi_grafico_tiempo entrega un grafico compartivo de distintas señales en el tiempo.
 def multi_grafico_comparativo(rango, senal_1, title_1, senal_2, title_2, senal_3, title_3, senal_4, title_4):
     mplot.figure()
     mplot.subplot(411)
@@ -214,9 +228,7 @@ def main():
 
     multi_grafico_frecuencia(freqs, fftAudioOriginal, 'FFT vs Frecuecia Audio Original', fft_modulacion_F08, 'FFT vs Frecuecia Modulación FM 80%', fft_modulacion_F1, 'FFT vs Frecuecia Modulación FM 100%', fft_modulacion_F12, 'FFT vs Frecuecia Modulación FM 120%')
 
-    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original',
-                         modulacion_F08, 'Amplitud vs Tiempo Modulación 80%', modulacion_F1, 'Amplitud vs Tiempo Modulación 100%',
-                         modulacion_F12, 'Amplitud vs Tiempo Modulación 120%')
+    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_F08, 'Amplitud vs Tiempo Modulación 80%', modulacion_F1, 'Amplitud vs Tiempo Modulación 100%', modulacion_F12, 'Amplitud vs Tiempo Modulación 120%')
 
 
     return 0
