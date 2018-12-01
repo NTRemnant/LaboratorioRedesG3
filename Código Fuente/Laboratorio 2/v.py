@@ -9,6 +9,9 @@ from numpy import cos, pi, sin, linspace
 import matplotlib as mp
 import matplotlib.pyplot as mplot
 
+# La función leer_audio se encarga de abrir el archivo a partir de una dirección pedida por pantalla.
+# En ella se obtienen los datos del archivo .wav con la función read de Scipy. Se entrega el tiempo de
+# muestreo, un arreglo de tiempos en los que se toman los datos, el rate del archivo y los datos leídos.
 def leer_audio(nombre):
     fs, data = sc.io.wavfile.read(nombre)
     canales = data[0].size
@@ -23,6 +26,8 @@ def leer_audio(nombre):
     freqs = scipy.fftpack.fftfreq(len(senal), rango_senal[1] - rango_senal[0])
     return fs, senal, rango_senal, freqs, t
 
+# Funcion que realiza el filtro paso bajo de una transformada de una señal, entra el ratio, la transformada y el valor de frecuencia de corte
+# Retorna la señal filtrada.
 def filtro_paso_bajo(rate, senal, corte):
     numtaps = 1001
     cutoff_frecuencia = corte
@@ -31,10 +36,14 @@ def filtro_paso_bajo(rate, senal, corte):
     senal_filtro = lfilter(fir_coeff, 1.0, senal)
     return senal_filtro
 
+# La función transformada de encarga de aplicar la funcion fft de scipy a la señal obtenido del archivo,
+#  esta función entrega el arreglo de datos que corresponden a la transformada de Fourier.
 def transformada(senal):
     fft = sc.fft(senal)
     return fft
 
+# La función transformada_inversa de encarga de aolicar la funcion ifft de scipy a una fft,
+#  esta función entrega el arreglo de datos que corresponden a la transformada inversa de Fourier.
 def transformada_inversa(senal):
     inversaFft = sc.ifft(senal)
     return inversaFft
@@ -45,16 +54,7 @@ def rango_data(tpo, x):
 
 def fx_portadora(Wo, A, rango_portadora):
     portadora = A * cos(2 * pi * Wo * rango_portadora)
-    print("Largo de funcion portadora") ###########
-    print(len(portadora))           ###########
     return portadora
-
-def interpolar_senal(rango_senal, senal, rango_portadora):
-    f = sc.interpolate.interp1d(rango_senal, senal)
-    senal_ip = f(rango_portadora)
-    print("Cantiad de datos de la nueva data")  ###########
-    print (len(senal_ip))                       ###########
-    return senal_ip
 
 def modulacion_am(senal, portadora):
     modulacion = portadora * senal
@@ -70,6 +70,9 @@ def modulacion_fm(senal, rango_senal, amplitud, w0, k):
     modulacion = amplitud * cos(w0*2*pi*rango_senal + 2*pi*k*integral)
     return modulacion
 
+# Las funciones graficar_tiempo y graficar_frecuencia se encargan de elaborar los graficos, difieren en los parametros, pero su
+# comportamiento es el mismno, graficar_tiempo entrega un grafico de la señal en el tiempo y graficar_frecuencia entrega un
+# grafico de la transformada de la señal en la frecuencia.
 def graficar_tiempo(rango_senal, senal, color, title):
     mplot.title(title)
     mplot.xlabel('Tiempo [s]')
@@ -84,6 +87,7 @@ def graficar_frecuencia(rango_senal, senalFFT, freqs, color, title):
     mplot.plot(freqs, abs(senalFFT), color)
     mplot.show()
 
+# La funcion multi_grafico_tiempo entrega un grafico compartivo de distintas señales en el tiempo.
 def multi_grafico_tiempo(rango, senal_1, title_1, senal_2, title_2, senal_3, title_3, senal_4, title_4):
     mplot.figure()
     mplot.subplot(411)
@@ -137,44 +141,29 @@ def multi_grafico_comparativo(rango, senal_1, title_1, senal_2, title_2, senal_3
 
 def main():
 
-    # nombre = input('Ingrese el nombre del archivo .wav a trabajar: ')
+    nombre = input('Ingrese el nombre del archivo .wav a trabajar: ')
 
-    fs, senal, rango_senal, freqs, t = leer_audio('handel.wav')
-
-    print(fs)
+    fs, senal, rango_senal, freqs, t = leer_audio(nombre)
 
     fftAudioOriginal = transformada(senal)
     ifftAudioOriginal = transformada_inversa(fftAudioOriginal)
 
-
     graficar_tiempo(rango_senal, senal, 'indianred', 'Grafico Amplitud vs. Tiempo del audio leído')
     graficar_frecuencia(rango_senal, fftAudioOriginal, freqs, 'indianred', 'Grafico FFT vs. Frecuencia de la transformada del audio leído')
 
-    '''
-    rango_portadora = rango_data(t, len(senal))
-
-    senal_ip = interpolar_senal(rango_senal, senal, rango_portadora)
-    graficar_tiempo(rango_portadora, senal_ip, 'indianred', 'Grafico Amplitud vs. Tiempo de señal interpolada')
-    '''
-
-    portadora_A08 = fx_portadora(15*fs, 0.2, rango_senal)
+    portadora_A08 = fx_portadora(15*fs, 0.8, rango_senal)
     portadora_A1  = fx_portadora(15*fs, 1.0, rango_senal)
-    portadora_A12 = fx_portadora(15*fs, 1.8, rango_senal)
+    portadora_A12 = fx_portadora(15*fs, 1.2, rango_senal)
 
-    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', portadora_A08, 'Amplitud vs Tiempo Portadora 20%', portadora_A1, 'Amplitud vs Tiempo Portadora 100%', portadora_A12, 'Amplitud vs Tiempo Portadora 180%')
-
-    # graficar_tiempo(rango_senal, portadora_A08, 'indianred', 'Grafico Amplitud vs. Tiempo de función portadora')
+    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', portadora_A08, 'Amplitud vs Tiempo Portadora 80%', portadora_A1, 'Amplitud vs Tiempo Portadora 100%', portadora_A12, 'Amplitud vs Tiempo Portadora 120%')
 
     modulacion_A08 = modulacion_am(senal, portadora_A08)
     modulacion_A1 = modulacion_am(senal, portadora_A1)
     modulacion_A12 = modulacion_am(senal, portadora_A12)
 
-    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Modulación 20%', modulacion_A1, 'Amplitud vs Tiempo Modulación 100%', modulacion_A12, 'Amplitud vs Tiempo Modulación 180%')
+    multi_grafico_tiempo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Modulación 80%', modulacion_A1, 'Amplitud vs Tiempo Modulación 100%', modulacion_A12, 'Amplitud vs Tiempo Modulación 120%')
 
-    multi_grafico_comparativo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Modulación 20%', modulacion_A1, 'Amplitud vs Tiempo Modulación 100%', modulacion_A12, 'Amplitud vs Tiempo Modulación 180%')
-
-
-    # graficar_tiempo(rango_senal, modulacion_A08, 'indianred', 'Grafico Amplitud vs. Tiempo de Modulada AM')
+    multi_grafico_comparativo(rango_senal, senal, 'Amplitud vs Tiempo Original', modulacion_A08, 'Amplitud vs Tiempo Modulación 80%', modulacion_A1, 'Amplitud vs Tiempo Modulación 100%', modulacion_A12, 'Amplitud vs Tiempo Modulación 120%')
 
     demodulacion = demodulacion_am(modulacion_A1, portadora_A1)
 
@@ -185,6 +174,12 @@ def main():
 
     graficar_tiempo(rango_senal, fft_lpf, 'indianred', 'Grafico Amplitud vs. Tiempo de Demodulada pasa bajo AM')
 
+    scipy.io.wavfile.write('dem1.wav',fs, fft_lpf)
+
+    ########################################################################################################################################################################################################################################################################
+
+    ######################## Modulación FM #################################################################################################################################################################################################################################
+
     modulacion_F08 = modulacion_fm(senal, rango_senal, 25000, 44100, 0.8)
     modulacion_F1  = modulacion_fm(senal, rango_senal, 25000, 44100, 1.0)
     modulacion_F12 = modulacion_fm(senal, rango_senal, 25000, 44100, 1.2)
@@ -193,7 +188,6 @@ def main():
                          modulacion_F08, 'Amplitud vs Tiempo Modulación k = 80%', modulacion_F1, 'Amplitud vs Tiempo Modulación 100%',
                          modulacion_F12, 'Amplitud vs Tiempo Modulación 120%')
 
-    scipy.io.wavfile.write('dem1.wav',fs, fft_lpf)
 
     return 0
 
