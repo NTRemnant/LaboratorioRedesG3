@@ -122,13 +122,17 @@ Finalmente para modular la señal por fase modulada (PM) la señal portadora mod
  <em>&phi;(t) = k x(t)</em>, k cte
 
 ![Sonido original](Images/Etapa2/handel_tiempo.png)
-![Transformada de la original](Images/Etapa2/handel_frecuencia.png)
-![Portadora](Images/Etapa2/portadora.png)
-![Modulada](Images/Etapa2/modulacion.png)
 
+![Transformada de la original](Images/Etapa2/handel_frecuencia.png)
+
+![Original con modulaciones](Images/Etapa2/portadora.png)
+
+![Original con demodulaciones](Images/Etapa2/modulacion.png)
 
 ![Demodulación](Images/Etapa2/demodulacion.png)
+
 ![Demodulada](Images/Etapa2/demodulada_1.png)
+
 ![Demodulada con paso bajos](Images/Etapa2/demodulada_pasobajo.png)
 
 
