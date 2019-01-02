@@ -12,11 +12,7 @@ import binascii
 
 #img = Image.open(sys.argv[1])
 
-wav = wave.open(sys.argv[1], "rb")
 
-raw = array.array('B')
-
-full_image = np.array([[[]]], dtype=int)
 #full_image=full_image.astype('uint8')
 
 

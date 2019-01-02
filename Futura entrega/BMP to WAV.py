@@ -32,7 +32,7 @@ i = 0
 # print('Vertical Resolution: %s' % struct.unpack('I', bmp.read(4)))
 # print('Number of Colours: %s' % struct.unpack('I', bmp.read(4)))
 # print('Important Colours: %s' % struct.unpack('I', bmp.read(4)))
-
+# exit()
 while i < 122:
     extra = struct.unpack('B', bmp.read(1))
     #print(extra[0])
