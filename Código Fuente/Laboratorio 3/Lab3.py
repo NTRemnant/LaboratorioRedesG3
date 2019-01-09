@@ -169,20 +169,17 @@ def modulacion_digital_fsk(senal, fc1, fc2, Tb, amplitud, fs):
 
 def demodulacion_digital_ask(senal, Tt, Tb, fs):
     msg = []
-
     y_env = np.abs(sigtool.hilbert(senal))
     h = firwin(numtaps=100, cutoff=0.4 * fs, nyq=fs)
     senal_filtrada = lfilter(h, 1.0, y_env)
 
     t = np.linspace(0, Tt, len(senal_filtrada))
 
-    graficar_tiempo(np.linspace(0, Tt, len(senal)), senal, 'indianred', 'señal ask original')
-    graficar_tiempo(t, senal_filtrada, 'indianred', 'señal ask demodulada')
+    graficar_tiempo(np.linspace(0, Tt, len(senal)), senal, 'indianred', 'Señal ASK original')
+    graficar_tiempo(t, senal_filtrada, 'indianred', 'Señal ASK filtrada')
 
     largo_final = len(senal_filtrada)
     largo_fragmento = floor(largo_final / (Tt / Tb))
-    print(largo_final)
-    print(largo_fragmento)
 
     mean = np.mean(senal_filtrada)
     msg_binario = []
@@ -195,85 +192,6 @@ def demodulacion_digital_ask(senal, Tt, Tb, fs):
 
     print(msg_binario)
     return msg_binario
-
-
-def modulacion_digital_qask(senal, fc, Tb, fs):
-
-    resultado = []
-    t = np.linspace(0, Tb, fs * Tb)
-
-    C_0000 =  100 * cos(2 * pi * fc * t)
-    C_0001 =  500 * cos(2 * pi * fc * t)
-    C_0010 = 1000 * cos(2 * pi * fc * t)
-    C_0011 = 1500 * cos(2 * pi * fc * t)
-    C_0100 = 2000 * cos(2 * pi * fc * t)
-    C_0101 = 2500 * cos(2 * pi * fc * t)
-    C_0110 = 3000 * cos(2 * pi * fc * t)
-    C_0111 = 3500 * cos(2 * pi * fc * t)
-    C_1000 = 4000 * cos(2 * pi * fc * t)
-    C_1001 = 4500 * cos(2 * pi * fc * t)
-    C_1010 = 5000 * cos(2 * pi * fc * t)
-    C_1011 = 5500 * cos(2 * pi * fc * t)
-    C_1100 = 6000 * cos(2 * pi * fc * t)
-    C_1101 = 6500 * cos(2 * pi * fc * t)
-    C_1110 = 7000 * cos(2 * pi * fc * t)
-    C_1111 = 7500 * cos(2 * pi * fc * t)
-
-
-    for b in range(0, len(senal)-3, 4):
-        print(b)
-        if senal[b] == 0 and senal[b+1] == 0 and senal[b+2] == 0 and senal[b+3] == 0:
-            resultado.extend(C_0000)
-
-        if senal[b] == 0 and senal[b+1] == 0 and senal[b+2] == 0 and senal[b+3] == 1:
-            resultado.extend(C_0001)
-
-        if senal[b] == 0 and senal[b+1] == 0 and senal[b+2] == 1 and senal[b+3] == 0:
-            resultado.extend(C_0010)
-
-        if senal[b] == 0 and senal[b+1] == 0 and senal[b+2] == 1 and senal[b+3] == 1:
-            resultado.extend(C_0011)
-
-        if senal[b] == 0 and senal[b+1] == 1 and senal[b+2] == 0 and senal[b+3] == 0:
-            resultado.extend(C_0100)
-
-        if senal[b] == 0 and senal[b+1] == 1 and senal[b+2] == 0 and senal[b+3] == 1:
-            resultado.extend(C_0101)
-
-        if senal[b] == 0 and senal[b+1] == 1 and senal[b+2] == 1 and senal[b+3] == 0:
-            resultado.extend(C_0110)
-
-        if senal[b] == 0 and senal[b+1] == 1 and senal[b+2] == 1 and senal[b+3] == 1:
-            resultado.extend(C_0111)
-
-        if senal[b] == 1 and senal[b+1] == 0 and senal[b+2] == 0 and senal[b+3] == 0:
-            resultado.extend(C_1000)
-
-        if senal[b] == 1 and senal[b+1] == 0 and senal[b+2] == 0 and senal[b+3] == 1:
-            resultado.extend(C_1001)
-
-        if senal[b] == 1 and senal[b+1] == 0 and senal[b+2] == 1 and senal[b+3] == 0:
-            resultado.extend(C_1010)
-
-        if senal[b] == 1 and senal[b+1] == 0 and senal[b+2] == 1 and senal[b+3] == 1:
-            resultado.extend(C_1011)
-
-        if senal[b] == 1 and senal[b+1] == 1 and senal[b+2] == 0 and senal[b+3] == 0:
-            resultado.extend(C_1100)
-
-        if senal[b] == 1 and senal[b+1] == 1 and senal[b+2] == 0 and senal[b+3] == 1:
-            resultado.extend(C_1101)
-
-        if senal[b] == 1 and senal[b+1] == 1 and senal[b+2] == 1 and senal[b+3] == 0:
-            resultado.extend(C_1110)
-
-        if senal[b] == 1 and senal[b+1] == 1 and senal[b+2] == 1 and senal[b+3] == 1:
-            resultado.extend(C_1111)
-
-
-
-    tiempo = np.linspace(0, Tb * len(senal), len(resultado))
-    return tiempo, resultado
 
 # Entradas: - la señal
 #           - las frecuencias de corte para cada señal y el periodo de la señal
@@ -299,24 +217,24 @@ def demodulacion_digital_fsk(senal, fc1, fc2, Tb, Tt, amplitud, fs):
     senal_filtrada_1 = lfilter(h_1, 1.0, y_env_1)
 
     tiempo = np.linspace(0, Tt, len(msg_0))
-    graficar_tiempo(np.linspace(0, Tt, len(senal)), senal, 'indianred', 'señal fsk original')
-    graficar_tiempo(tiempo, msg_0, 'indianred', 'ceros sin filtro')
-    graficar_tiempo(tiempo, msg_1, 'indianred', 'unos sin filtro')
+    graficar_tiempo(np.linspace(0, Tt, len(senal)), senal, 'indianred', 'Señal FSK original')
+    graficar_tiempo(tiempo, msg_0, 'indianred', 'Gráfica detección de ceros sin filtrar')
+    graficar_tiempo(tiempo, msg_1, 'indianred', 'Gráfica detección de unos sin filtrar')
 
-    graficar_tiempo(tiempo, senal_filtrada_0, 'indianred', 'ceros con filtro')
-    graficar_tiempo(tiempo, senal_filtrada_1, 'indianred', 'unos con filtro')
+    graficar_tiempo(tiempo, senal_filtrada_0, 'indianred', 'Gráfica detección de ceros filtrada')
+    graficar_tiempo(tiempo, senal_filtrada_1, 'indianred', 'Gráfica detección de unos filtrada')
 
     senal_filtrada_final = np.subtract(senal_filtrada_1,senal_filtrada_0)
-    graficar_tiempo(tiempo, senal_filtrada_final, 'indianred', 'señal fsk demodulada')
+    graficar_tiempo(tiempo, senal_filtrada_final, 'indianred', 'Señal FSK filtrada')
 
     largo_final = len(senal_filtrada_final)
     largo_fragmento = floor(largo_final / (Tt/Tb))
 
     mean = np.mean(senal_filtrada_final)
     msg_binario = []
-    sampled_signal = senal_filtrada_final[floor(largo_fragmento / 2):largo_final:floor(largo_fragmento)]
+    sampled_signal = senal_filtrada_final[floor(largo_fragmento * 0.55):largo_final:floor(largo_fragmento)]
     for bit in sampled_signal:
-        if bit > mean:
+        if bit > 0:
             msg_binario.append(1)
         else:
             msg_binario.append(0)
@@ -345,7 +263,7 @@ def demodulacion_digital_fsk_2(senal, Tb, Tt, fs):
 
     mean = np.mean(senal_filtrada)
     msg_binario = []
-    sampled_signal = senal_filtrada[floor(largo_fragmento / 2):largo_final:floor(largo_fragmento)]
+    sampled_signal = senal_filtrada[floor(largo_fragmento / 2)-1:largo_final:floor(largo_fragmento)-1]
     for bit in sampled_signal:
         if bit > mean:
             msg_binario.append(1)
@@ -361,7 +279,9 @@ def main():
 
     # fs, senal, rango_senal, freqs, t = leer_audio('handel.wav')
 
-    array_prueba = np.random.random_integers(0,1,16)
+    # array_prueba = np.random.random_integers(0,1,16)
+    array_prueba = (1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1)
+
     print(array_prueba)
 
     # fc = 200000 (este valor esta bien para el lab)
@@ -372,21 +292,22 @@ def main():
     Tb = 0.1   # s
     A = 500    # db * 0.1
     B = 700
+    cte_ruido = 50
 
     tprueba, prueba = modulacion_digital_ask(array_prueba, fc, Tb, A, B, fs1)
-    graficar_tiempo(tprueba, prueba, 'indianred', 'modulación ask normal')
-    prueba = generador_ruido(prueba, 0.1)
-    graficar_tiempo(tprueba, prueba, 'indianred', 'modulación ask ruidosa')
+    graficar_tiempo(tprueba, prueba, 'indianred', 'Señal ASK original')
+    prueba = generador_ruido(prueba, cte_ruido)
+    graficar_tiempo(tprueba, prueba, 'indianred', 'Señal ASK con ruido gaussiano añadido')
 
     demodulacion_digital_ask(prueba, len(array_prueba) * Tb, Tb, fs1)
 
     tprueba2, prueba2 = modulacion_digital_fsk(array_prueba, fc, fc2, Tb, A, fs2)
-    graficar_tiempo(tprueba2, prueba2, 'indianred', 'modulación fsk normal')
-    prueba2 = generador_ruido(prueba2, 0.1)
-    graficar_tiempo(tprueba2, prueba2, 'indianred', 'modulación fsk ruidosa')
+    graficar_tiempo(tprueba2, prueba2, 'indianred', 'Señal FSK original')
+    prueba2 = generador_ruido(prueba2, cte_ruido)
+    graficar_tiempo(tprueba2, prueba2, 'indianred', 'Señal FSK con ruido gaussiano añadido')
 
     demodulacion_digital_fsk(prueba2, fc, fc2, Tb, len(array_prueba) * Tb, A, fs2)
-    demodulacion_digital_fsk_2(prueba2, Tb, len(array_prueba) * Tb, fs2)
+    # demodulacion_digital_fsk_2(prueba2, Tb, len(array_prueba) * Tb, fs2)
 
     scipy.io.wavfile.write('modulacion_ask.wav', fs1, prueba)
     scipy.io.wavfile.write('modulacion_fsk.wav', fs2, prueba2)

@@ -8,7 +8,7 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
 - Alberto Pizarro
 
 ## Indice
- 
+
 - [Etapa 1: Análisis  de señales](#etapa-1-an%C3%A1lisis--de-se%C3%B1ales)
   - [Objetivos](#objetivos)
   - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega)
@@ -16,6 +16,9 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
 - [Etapa 2: Modulación AM/FM](#etapa-2-modulaci%C3%B3n-amfm)
   - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega-1)
   - [Análisis de resultados](#an%C3%A1lisis-de-resultados-1)
+- [Etapa 3: Modulación ASK/FSK](#etapa-3-modulaci%C3%B3n-askfsk)
+  - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega-2)
+  - [Análisis de resultados](#an%C3%A1lisis-de-resultados-2)
 - [Tecnología utilizada](#tecnolog%C3%ADa-utilizada)
     - [Software](#software)
     - [OS](#os)
@@ -121,8 +124,15 @@ Finalmente para modular la señal por fase modulada (PM) la señal portadora mod
 
  <em>&phi;(t) = k x(t)</em>, k cte
 
+### Caracteristicas de la entrega
+  - Se implementan módulos para modular y demodular audio usando modulación AM
+  - Se implementan módulos para modular audio usando modulación FM
 
+Como material para probar nuestros programas, se nos proveyó de un nuevo archivo de audio adicional a los usados
+para la entrega pasada, el cual corresponde a un fragmento de la obra **<em>El Mesías HWV 56 (Messiah - Der Messias)
+</em>**, creado por el compositor <em>Georg Friedrich Händel</em> en el año 1741.
 
+### Análisis de resultados
 Amplitud vs Tiempo de la original
 ![Sonido original](Images/Etapa2/handel_tiempo.png)
 
@@ -150,16 +160,67 @@ Original con modulaciones FM a distintas porcentajes
 ![Original con modulaciones](Images/Etapa2/frecuencias_fm.png)
 ![Original con modulaciones](Images/Etapa2/amplitud_fm_3.png)
 
+## Etapa 3: Modulación ASK/FSK
+
+![Teoria modulacion fsk](Images/Etapa3/teoria_mod_fsk.png)
+![Teoria demodulacion fsk](Images/Etapa3/teoria_demod_fsk.png)
 
 ### Caracteristicas de la entrega
-  - Se implementan módulos para modular y demodular audio usando modulación AM
-  - Se implementan módulos para modular audio usando modulación FM
-
-Como material para probar nuestros programas, se nos proveyó de un nuevo archivo de audio adicional a los usados
-para la entrega pasada, el cual corresponde a un fragmento de la obra **<em>El Mesías HWV 56 (Messiah - Der Messias)
-</em>**, creado por el compositor <em>Georg Friedrich Händel</em> en el año 1741.
+  - Se implementan módulo para modular y demodular un arreglo binario usando modulación ASK
+  - Se implementan módulo para modular y demodular un arreglo binario usando modulación FSK
 
 ### Análisis de resultados
+Se tiene un array inicial de [1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1], un tiempo de bit de 
+0.1 segundos y máximo de ruido de 50 decibeles.
+ 
+Para la modulación ASK se usarán cortadoras de 2 <em> kHz </em> con amplitudes de 50 <em>db</em> para
+representar ceros y 70 <em>db</em> para representar unos, la frecuencia de muestreo es de 5 <em> kHz </em>.
+
+Para la modulación FSK se usarán cortadoras con amplitudes de 50 <em>db</em>; con frecuencias de 
+2 <em> kHz </em> para representar ceros y 4 <em> kHz </em> para representar unos, la frecuencia 
+de muestreo es de 5 <em> kHz </em>. 
+ ufc = 2000
+    fc2 = 4000
+    fs1 = 5000
+    fs2 = 10000
+    Tb = 0.1   # s
+    A = 500    # db * 0.1
+    B = 700
+    cte_ruido = 50
+
+Gráfica inicial con modulación ASK.
+![ASK_original](Images/Etapa3/ask_original.png)
+
+Gráfica inicial ASK con ruido gaussiano aditivo 
+![ASK_ruido](Images/Etapa3/ask_ruido.png)
+
+Gráfica con filtro ASK completado
+![ASK_filtro](Images/Etapa3/ask_filtro.png)
+
+A partir de esta señal se deduce el array original
+
+Gráfica inicial con modulación FSK.
+![FSK_original](Images/Etapa3/fsk_original.png)
+
+Gráfica inicial FSK con ruido gaussiano aditivo (el máximo de ruido es de 50 decibeles)
+![FSK_ruido](Images/Etapa3/fsk_ruido.png)
+
+Gráfica FSK correlacionando ceros
+![FSK_cero](Images/Etapa3/fsk_ceros.png)
+
+Gráfica FSK correlacionando unos
+![FSK_uno](Images/Etapa3/fsk_unos.png)
+
+Gráfica con filtro FSK correlacionando ceros
+![FSK_cero_filtro](Images/Etapa3/fsk_ceros_filtro.png)
+
+Gráfica con filtro FSK correlacionando unos
+![FSK_uno_filtro](Images/Etapa3/fsk_unos_filtro.png)
+
+Gráfica con filtro FSK completado
+![FSK_suma](Images/Etapa3/fsk_suma.png)
+
+A partir de esta señal se deduce el array original
 
 ## Tecnología utilizada
 Se utilizaron las siguientes tecnologías y librerías para construir el proyecto:
