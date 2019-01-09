@@ -232,14 +232,22 @@ Posteriormente se filtra la señal modulada y a partir de esta señal se deduce 
 Gráfica inicial con modulación FSK:
 ![FSK_original](Images/Etapa3/fsk_original.png)
 
+En este gráfico es un poco más complejo apreciar la modulación y su correcta implementación, para FSK se utilizan 2 frecuencias distintas, estas se aprecian en la anchura de las curvas del gráfico, la frecuencia más baja presenta una anchura mayor que la más alta.
+
 Gráfica inicial FSK con ruido gaussiano aditivo (el máximo de ruido es de 50 decibeles)
 ![FSK_ruido](Images/Etapa3/fsk_ruido.png)
+
+Al igual que en ASK, se agrega ruido para simular de manera más realista la señal.
 
 Gráfica FSK correlacionando ceros
 ![FSK_cero](Images/Etapa3/fsk_ceros.png)
 
+El gráfico anterior surge al correlacionar la señal con la portadora que representa los ceros en la señal, asi donde se encuentre un cero representado por la portadora, en el gráfico se visualizara una curva.
+
 Gráfica FSK correlacionando unos
 ![FSK_uno](Images/Etapa3/fsk_unos.png)
+
+Si la correlación con la portadora de los ceros esta correctamente realizada, la correlación con la portadora de los unos debe entregar curvas en los puntos donde el gráfico anterior esta en cero y esto es visualmente comprobable en el gráfico expuesto-
 
 Gráfica con filtro FSK correlacionando ceros
 ![FSK_cero_filtro](Images/Etapa3/fsk_ceros_filtro.png)
@@ -247,10 +255,12 @@ Gráfica con filtro FSK correlacionando ceros
 Gráfica con filtro FSK correlacionando unos
 ![FSK_uno_filtro](Images/Etapa3/fsk_unos_filtro.png)
 
+Ambas correlaciones se filtran para poder corroborar lo que se expuso anteriormente.
+
 Gráfica con filtro FSK completado
 ![FSK_suma](Images/Etapa3/fsk_suma.png)
 
-A partir de esta señal se deduce el array original
+Finalmente se filtra la señal, en este gráfico los picos superiores representan valores uno y los picos inferiores representan valores cero, luego, a partir de esta señal se deduce el array original
 
 ## Tecnología utilizada
 Se utilizaron las siguientes tecnologías y librerías para construir el proyecto:
