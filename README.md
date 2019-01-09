@@ -7,8 +7,7 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
 - Sebastián Pasutti
 - Alberto Pizarro
 
-## Indice
-
+## Indice 
 - [Etapa 1: Análisis  de señales](#etapa-1-an%C3%A1lisis--de-se%C3%B1ales)
   - [Objetivos](#objetivos)
   - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega)
@@ -17,6 +16,8 @@ Proyecto semestral de laboratorio para la asignatura de Redes de Computadores 2�
   - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega-1)
   - [Análisis de resultados](#an%C3%A1lisis-de-resultados-1)
 - [Etapa 3: Modulación ASK/FSK](#etapa-3-modulaci%C3%B3n-askfsk)
+  - [Modulación FSK](#modulaci%C3%B3n-fsk)
+  - [Modulación ASK](#modulaci%C3%B3n-ask)
   - [Caracteristicas de la entrega](#caracteristicas-de-la-entrega-2)
   - [Análisis de resultados](#an%C3%A1lisis-de-resultados-2)
 - [Tecnología utilizada](#tecnolog%C3%ADa-utilizada)
@@ -136,14 +137,11 @@ para la entrega pasada, el cual corresponde a un fragmento de la obra **<em>El M
 Amplitud vs Tiempo de la original
 ![Sonido original](Images/Etapa2/handel_tiempo.png)
 
-
 Transformada de la original
 ![Transformada de la original](Images/Etapa2/handel_frecuencia.png)
 
-
 Original con modulaciones a distintas porcentajes
 ![Original con modulaciones](Images/Etapa2/portadoras.png)
-
 
 Original con demodulaciones a distintos porcentajes
 ![Original con demodulaciones](Images/Etapa2/modulacion.png)
@@ -162,8 +160,42 @@ Original con modulaciones FM a distintas porcentajes
 
 ## Etapa 3: Modulación ASK/FSK
 
+### Modulación FSK
+La modulación por desplazamiento de frecuencia (**F**requency-**S**hift **K**eying -> **FSK**), , es la 
+forma de modulación digital en la cual los bits se representan como variaciones de frecuencia e idéntica
+amplitud, para conseguirlo se utilizan dos osciladores que generan señales a diferentes frecuencias (señales portadoras)
+predefinidas a un tiempo constante (tiempo de bit), de modo que cada bit se representa a una señal con tiempo fijo, 
+finalmente se juntan en una señal única, tal y como se muestra en la siguiente imagen:
 ![Teoria modulacion fsk](Images/Etapa3/teoria_mod_fsk.png)
+
+Para demodular la señal se debe detectar primeramente la señal que debe estar a una frecuencia minima, 
+luego se deben realizar dos correlaciones con la señal recibida, una por cada una de las frecuencia portadoras
+existentes; este proceso generará dos señales complementarias entre si, las cuales deben ser filtradas
+antes de poder calcular la diferencia entre ellas, construyendo así una señal binaria, tal y como se 
+muestra en la siguiente imagen:  
+
 ![Teoria demodulacion fsk](Images/Etapa3/teoria_demod_fsk.png)
+
+A partir de la señal binaria generada se puede obtener el mensaje digital inicial, tomando secciones 
+equidisantes de la señal en base al tiempo de bit predefinido, si el valor de bit es mayor que un 
+cierto valor de corte se tomará como un bit 1, sino se tomará el bit como 0. Para efectos del laboratorio,
+ como se restan dos señales positivas, la señal resultante tendrá valores positivos para representar unos
+  y negativos para representar ceros, por lo que el valor de corte para este caso es 0.  
+
+### Modulación ASK
+La modulación por desplazamiento de amplitud (**A**mplitude-**S**hift **K**eying -> **ASK**), es la 
+forma de modulación digital en la cual los bits se representan como variaciones de amplitud con frecuencia
+constante.
+
+Para modular un mensaje binario en ASK se deben generar dos señales portadoras al igual que en FSK, 
+con la diferencia de que ambos asciladores están a la misma frecuencia y con amplitudes diferentes y predefinidas,
+el resto del proceso sigue el lineamiento de FSK.
+
+Para demodular una señal modulada ask de vuelta al mensaje, se debe filtrar la señal para obtener una curva que fluctua
+en ambas amplitudes antes de cortar en secciones equidisantes a la señal (considerando el tiempo de bit
+de la portadora); para diferenciar entre bits se debe considerar que ambos elementos se diferencian en 
+amplitud (los unos tienen amplitud constante, al igual que los ceros), por lo que se considera el promedio
+entre valores como el corte para diferenciar ambos bits.  
 
 ### Caracteristicas de la entrega
   - Se implementan módulo para modular y demodular un arreglo binario usando modulación ASK
@@ -178,15 +210,7 @@ representar ceros y 70 <em>db</em> para representar unos, la frecuencia de muest
 
 Para la modulación FSK se usarán cortadoras con amplitudes de 50 <em>db</em>; con frecuencias de 
 2 <em> kHz </em> para representar ceros y 4 <em> kHz </em> para representar unos, la frecuencia 
-de muestreo es de 5 <em> kHz </em>. 
- ufc = 2000
-    fc2 = 4000
-    fs1 = 5000
-    fs2 = 10000
-    Tb = 0.1   # s
-    A = 500    # db * 0.1
-    B = 700
-    cte_ruido = 50
+de muestreo es de 10 <em> kHz </em>.  
 
 Gráfica inicial con modulación ASK.
 ![ASK_original](Images/Etapa3/ask_original.png)
