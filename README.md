@@ -202,7 +202,7 @@ entre valores como el corte para diferenciar ambos bits.
   - Se implementan módulo para modular y demodular un arreglo binario usando modulación FSK
 
 ### Análisis de resultados
-Se tiene un array inicial de [1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1], un tiempo de bit de 
+Se tiene un array inicial de ceros y unos como [1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1], un tiempo de bit de 
 0.1 segundos y máximo de ruido de 50 decibeles.
  
 Para la modulación ASK se usarán cortadoras de 2 <em> kHz </em> con amplitudes de 50 <em>db</em> para
