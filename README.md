@@ -212,18 +212,24 @@ Para la modulación FSK se usarán cortadoras con amplitudes de 50 <em>db</em>; 
 2 <em> kHz </em> para representar ceros y 4 <em> kHz </em> para representar unos, la frecuencia 
 de muestreo es de 10 <em> kHz </em>.  
 
-Gráfica inicial con modulación ASK.
+### ASK
+Gráfica inicial con modulación ASK:
 ![ASK_original](Images/Etapa3/ask_original.png)
 
-Gráfica inicial ASK con ruido gaussiano aditivo 
+En el anterior gráfico se muestra la modulación ASK, con las 2 amplitudes usadas bastante marcadas y ambas compartiendo el valor de frecuencia usado.
+
+Gráfica inicial ASK con ruido gaussiano aditivo:
 ![ASK_ruido](Images/Etapa3/ask_ruido.png)
 
-Gráfica con filtro ASK completado
+Luego, se agrega ruido a la señal modulada para simular los efectos del canal en la señal, de forma que la simulación sea más realista y nos de una idea de si lo realizado es aplicable en la realidad con una tasa de errores bajas.
+
+Gráfica con filtro ASK completado:
 ![ASK_filtro](Images/Etapa3/ask_filtro.png)
 
-A partir de esta señal se deduce el array original
+Posteriormente se filtra la señal modulada y a partir de esta señal se deduce el array original.
 
-Gráfica inicial con modulación FSK.
+### FSK
+Gráfica inicial con modulación FSK:
 ![FSK_original](Images/Etapa3/fsk_original.png)
 
 Gráfica inicial FSK con ruido gaussiano aditivo (el máximo de ruido es de 50 decibeles)
