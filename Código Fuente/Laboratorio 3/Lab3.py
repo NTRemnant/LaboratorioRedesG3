@@ -12,6 +12,12 @@ import matplotlib.pyplot as mplot
 
 from math import floor, sqrt
 
+from PIL import Image
+import wave
+import array
+import sys
+import struct
+
 def leer_audio(nombre):
     fs, data = sc.io.wavfile.read(nombre)
     canales = data[0].size
@@ -109,7 +115,9 @@ def multi_grafico_tiempo(rango, senal_1, title_1, senal_2, title_2, senal_3, tit
 def conversion_binaria(senal):
     resultado = []
     for i in senal:
-        resultado[i] = '{:08b}'.format(senal[i])
+        bin_array = '{:08b}'.format(i)
+        for bit in bin_array:
+            resultado.append(int(bit))
     return resultado
 
 def generador_ruido(senal, A):
@@ -153,7 +161,10 @@ def modulacion_digital_ask(senal, fc, Tb, A, B, fs):
 # Salida:   - el arreglo tiempo y el arreglo de la señal modificada
 def modulacion_digital_fsk(senal, fc1, fc2, Tb, amplitud, fs):
     resultado = []
-    t = np.linspace(0, Tb, fs * Tb)
+
+    cantMuestras = round(fs * Tb)
+
+    t = np.linspace(0, Tb, cantMuestras)
 
     C0 = amplitud * cos(2 * pi * fc1 * t)
     C1 = amplitud * cos(2 * pi * fc2 * t)
@@ -181,8 +192,8 @@ def demodulacion_digital_ask(senal, fc, fs, Tt, Tb):
 
     t = np.linspace(0, Tt, len(senal_filtrada))
 
-    graficar_tiempo(np.linspace(0, Tt, len(senal)), senal, 'indianred', 'Señal ASK original')
-    graficar_tiempo(t, senal_filtrada, 'indianred', 'Señal ASK filtrada')
+    # graficar_tiempo(np.linspace(0, Tt, len(senal)), senal, 'indianred', 'Señal ASK original')
+    # graficar_tiempo(t, senal_filtrada, 'indianred', 'Señal ASK filtrada')
 
     largo_final = len(senal_filtrada)
     largo_fragmento = floor(largo_final / (Tt / Tb))
@@ -197,7 +208,7 @@ def demodulacion_digital_ask(senal, fc, fs, Tt, Tb):
         else:
             msg_binario.append(0)
 
-    print(msg_binario)
+    # print(msg_binario)
     return msg_binario
 
 # Entradas: - la señal
@@ -205,46 +216,121 @@ def demodulacion_digital_ask(senal, fc, fs, Tt, Tb):
 #           - la amplitud A
 #           - la frecuencia fs de muestreo
 # Salida:   - el arreglo tiempo y el arreglo de la señal modificada
-def demodulacion_digital_fsk(senal, fc1, fc2, Tb, Tt, amplitud, fs):
+def demodulacion_digital_fsk(senal, fc1, fc2, Tb, fs, filtro = False):
     # Creando señales portadoras conocidas
-    t = np.linspace(0, Tb, fs * Tb)
+    cantMuestras = round(fs * Tb)
+    aproxCantBits = round(len(senal)/cantMuestras)
+    t = np.linspace(0, Tb, cantMuestras)
 
-    C0 = amplitud * cos(2 * pi * fc1 * t)
-    C1 = amplitud * cos(2 * pi * fc2 * t)
+    C0 = cos(2 * pi * fc1 * t)
+    C1 = cos(2 * pi * fc2 * t)
 
+    print("correl c0")
     # Correlacionando datos
+    print("1/4")
     msg_0 = np.correlate(senal, C0)
+    print("2/4")
     y_env_0 = np.abs(sigtool.hilbert(msg_0))
-    h_0 = firwin(numtaps=100, cutoff=0.4 * fs, nyq=fs)
-    senal_filtrada_0 = lfilter(h_0, 1.0, y_env_0)
 
+    if filtro == True:
+        print("3/4")
+        h_0 = firwin(numtaps=100, cutoff=0.4 * fs, nyq=fs)
+        print("4/4")
+        senal_filtrada_0 = lfilter(h_0, 1.0, y_env_0)
+    else:
+        senal_filtrada_0 = y_env_0
+
+    print(len(senal_filtrada_0))
+    print("correl c1")
+
+    print("1/4")
     msg_1 = np.correlate(senal, C1)
+    print("2/4")
     y_env_1 = np.abs(sigtool.hilbert(msg_1))
-    h_1 = firwin(numtaps=100, cutoff=0.4 * fs, nyq=fs)
-    senal_filtrada_1 = lfilter(h_1, 1.0, y_env_1)
 
-    graficar_tiempo(np.linspace(0, Tt, len(senal)), senal, 'indianred', 'Señal FSK original')
-    graficar_tiempo(np.linspace(0, Tt, len(msg_0)), msg_0, 'indianred', 'Gráfica detección de ceros sin filtrar')
-    graficar_tiempo(np.linspace(0, Tt, len(msg_1)), msg_1, 'indianred', 'Gráfica detección de unos sin filtrar')
+    if filtro == True:
+        print("3/4")
+        h_1 = firwin(numtaps=100, cutoff=0.4 * fs, nyq=fs)
+        print("4/4")
+        senal_filtrada_1 = lfilter(h_1, 1.0, y_env_1)
+    else:
+        senal_filtrada_1 = y_env_1
 
-    graficar_tiempo(np.linspace(0, Tt, len(senal_filtrada_0)), senal_filtrada_0, 'indianred', 'Gráfica detección de ceros filtrada')
-    graficar_tiempo(np.linspace(0, Tt, len(senal_filtrada_1)), senal_filtrada_1, 'indianred', 'Gráfica detección de unos filtrada')
+    print("graficas")
 
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal)), senal, 'indianred', 'Señal FSK original')
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(msg_0)), msg_0, 'indianred', 'Gráfica detección de ceros sin filtrar')
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(msg_1)), msg_1, 'indianred', 'Gráfica detección de unos sin filtrar')
+
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(y_env_0)), y_env_0, 'indianred', 'Gráfica detección de ceros filtrada')
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(y_env_1)), y_env_1, 'indianred', 'Gráfica detección de unos filtrada')
+
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_0)), senal_filtrada_0, 'indianred', 'Gráfica detección de ceros filtrada')
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_1)), senal_filtrada_1, 'indianred', 'Gráfica detección de unos filtrada')
+
+    print(len(senal_filtrada_1))
+    print("resta")
     senal_filtrada_final = np.subtract(senal_filtrada_1,senal_filtrada_0)
-    graficar_tiempo(np.linspace(0, Tt, len(senal_filtrada_final)), senal_filtrada_final, 'indianred', 'Señal FSK filtrada')
+
+    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_final)), senal_filtrada_final, 'indianred', 'Señal FSK filtrada')
 
     largo_final = len(senal_filtrada_final)
-    largo_fragmento = floor(largo_final / (Tt/Tb))
+    largo_fragmento = cantMuestras * (len(senal_filtrada_final) / len(senal))
+    print(cantMuestras)
+    print(len(senal_filtrada_final))
+    print(len(senal))
+    print(len(senal_filtrada_final) / len(senal))
 
     msg_binario = []
-    sampled_signal = senal_filtrada_final[floor(largo_fragmento * 0.51):largo_final:floor(largo_fragmento)]
-    for bit in sampled_signal:
+
+    # Divisor mejorado
+    #
+    seccionBorde = largo_fragmento * 0.20
+    posActual = seccionBorde
+    #largo_fragmento *= 1
+
+    print("divisor")
+    print(posActual)
+    print(round(posActual))
+    print(largo_fragmento)
+    #print(senal_filtrada_final[0:int(largo_fragmento * 5)])
+
+    while posActual < largo_final:
+        bit = senal_filtrada_final[int(round(posActual))]
         if bit > 0:
             msg_binario.append(1)
         else:
             msg_binario.append(0)
 
-    print(msg_binario)
+        # ubicacion siguiente posicion mejorada
+        aux = posActual
+        posEncontrada = False
+
+        #print('pos actual = {:f} pos sig = {:f} '.format(posActual, posActual + largo_fragmento))
+        # Si hay un cambio de bit recorregir divisor
+        while (aux < (posActual + largo_fragmento)) & ((int(round(aux))-1) < len(senal_filtrada_final)) & (posEncontrada is False):
+            auxAnterior = senal_filtrada_final[int(round(aux))-2]
+            auxActual = senal_filtrada_final[int(round(aux))-1]
+            #print('aux actual = {:f} {:f} {:f}'.format(aux, auxAnterior,auxActual))
+            if ((auxAnterior < 0) & (auxActual > 0)) | ((auxAnterior > 0) & (auxActual < 0)):
+                #print("cambio" + str(aux))
+                posActual = aux + (largo_fragmento * 0.5)
+                posEncontrada = True
+            aux += 1
+        if posEncontrada is False:
+            #print('aux actual = {:f} '.format(aux))
+            posActual += largo_fragmento
+        #print(posActual)
+
+    print(len(senal_filtrada_final))
+    print(seccionBorde)
+    print(posActual)
+    if ((posActual-largo_fragmento+seccionBorde) < len(senal_filtrada_final)) & (senal_filtrada_final[int(round(len(senal_filtrada_final)-seccionBorde))] > 0):
+        msg_binario.append(1)
+    elif ((posActual-largo_fragmento+seccionBorde) < len(senal_filtrada_final)) & (senal_filtrada_final[int(round(len(senal_filtrada_final)-seccionBorde))] < 0):
+        msg_binario.append(0)
+
+    #print(msg_binario)
     return msg_binario
 
 # Entradas: - la señal
@@ -278,7 +364,92 @@ def demodulacion_digital_fsk_2(senal, Tb, Tt, fs):
     print(msg_binario)
     return msg_binario
 
+def convertirBMPWAV(imagen, audio):
+
+
+    wav = wave.open(audio, 'wb')
+
+    raw = array.array('B')
+
+    bmp = open(imagen, 'rb')
+
+    i = 0
+
+    while i < 122:
+        extra = struct.unpack('B', bmp.read(1))
+        # print(extra[0])
+        raw.append(extra[0])
+        i += 1
+    bmp.close()
+
+    img = Image.open(imagen)
+    for r, g, b in img.getdata():
+        raw.append(r)
+        raw.append(g)
+        raw.append(b)
+        i += 1
+        # print("%i" % r, "%i" % g, "%i" % b)
+    # img.close()
+    wav.setnchannels(1)
+
+    wav.setsampwidth(1)
+
+    wav.setframerate(44100)
+
+    wav.writeframes(raw)
+
+    # print("frames: %i" % i)
+    # print("size: %i" % len(raw))
+
+    wav.close()
+
 def main():
+    nombreImagen = "mario.bmp"
+    nombreAudio = "salidamario.wav"
+
+    print("lectura")
+    convertirBMPWAV(nombreImagen, nombreAudio)
+
+    print("lect")
+
+    fs, array_prueba, rango_senal, freqs, t = leer_audio(nombreAudio)
+
+    #array_prueba_bin = np.array(np.random.random_integers(0, 1, 100))
+    # print(array_prueba_bin)
+    # array_prueba_bin = (1, 0, 1, 0, 0, 0 , 0, 0, 1, 1, 0, 1, 1, 1, 1,1,1, 0, 0, 1, 1)
+    print("bin")
+    array_prueba_bin = conversion_binaria(array_prueba)
+    # print(len(array_prueba))
+    print(len(array_prueba_bin))
+    # print(fs)
+
+    fc = 4000
+    fc2 = 8000
+    Tb = 0.001  # s
+    amplitud = 1
+    fs = 50000
+
+    tprueba2, array_prueba_fsk = modulacion_digital_fsk(array_prueba_bin, fc, fc2, Tb, amplitud, fs)
+
+    print(len(array_prueba_fsk))
+
+    print("fin fsk")
+
+    scipy.io.wavfile.write('mario_fsk.wav', fs, np.array(array_prueba_fsk))
+    # exit()
+
+    array_final = demodulacion_digital_fsk(np.array(array_prueba_fsk), fc, fc2, Tb, fs)
+    # print(array_prueba_bin)
+
+    print(array_prueba_bin[-20:])
+    print(array_final[-20:])
+
+    print("prueba error")
+    print(np.sum(np.absolute(np.array(array_final) - np.array(array_prueba_bin))))
+
+    exit()
+
+
 
     # nombre = input('Ingrese el nombre del archivo .wav a trabajar: ')
 
