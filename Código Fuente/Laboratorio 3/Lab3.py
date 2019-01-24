@@ -120,6 +120,20 @@ def conversion_binaria(senal):
             resultado.append(int(bit))
     return resultado
 
+def deconversion_binaria(bin_data):
+    data = []
+    exp = 7
+    dec_value = 0
+    for i in bin_data:
+        dec_value += (i * (2 ** exp))
+        if exp > 0:
+            exp -= 1
+        else:
+            data.append(dec_value)
+            dec_value = 0
+            exp = 7
+    return data
+
 def generador_ruido(senal, A):
     ruido = (np.random.randn(len(senal))+1)*A
     snr = 10*np.log10(np.mean(np.square(senal)) / np.mean(np.square(ruido)))
@@ -404,6 +418,16 @@ def convertirBMPWAV(imagen, audio):
     wav.close()
 
 def main():
+
+    senal = [24, 4, 54, 0, 2]
+
+    bin_data = conversion_binaria(senal)
+    da_dart = deconversion_binaria(bin_data)
+
+    print(senal)
+    print(bin_data)
+    print(da_dart)
+  
     nombreImagen = "mario.bmp"
     nombreAudio = "salidamario.wav"
 
