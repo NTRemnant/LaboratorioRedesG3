@@ -54,15 +54,15 @@ def rango_data(tpo, x):
 
 def fx_portadora(Wo, A, rango_portadora):
     portadora = A * cos(2 * pi * Wo * rango_portadora)
-    print("Largo de funcion portadora") ###########
-    print(len(portadora))           ###########
+    # print("Largo de funcion portadora") ###########
+    # print(len(portadora))           ###########
     return portadora
 
 def interpolar_senal(rango_senal, senal, rango_portadora):
     f = sc.interpolate.interp1d(rango_senal, senal)
     senal_ip = f(rango_portadora)
-    print("Cantiad de datos de la nueva data")  ###########
-    print (len(senal_ip))                       ###########
+    # print("Cantiad de datos de la nueva data")  ###########
+    # print (len(senal_ip))                       ###########
     return senal_ip
 
 def modulacion_am(senal, portadora):
@@ -137,7 +137,7 @@ def deconversion_binaria(bin_data, n_bits):
 def generador_ruido(senal, A):
     ruido = (np.random.randn(len(senal))+1)*A
     snr = 10*np.log10(np.mean(np.square(senal)) / np.mean(np.square(ruido)))
-    print("SNR = %fdB" % snr)
+    # print("SNR = %fdB" % snr)
     senal_ruidosa = np.add(senal,ruido)
     return senal_ruidosa
 
@@ -239,61 +239,62 @@ def demodulacion_digital_fsk(senal, fc1, fc2, Tb, fs, filtro = False):
     C0 = cos(2 * pi * fc1 * t)
     C1 = cos(2 * pi * fc2 * t)
 
-    print("correl c0")
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal)), senal, 'indianred', 'Señal FSK original')
+    # print("correl c0")
     # Correlacionando datos
-    print("1/4")
+    # print("1/4")
     msg_0 = np.correlate(senal, C0)
-    print("2/4")
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(msg_0)), msg_0, 'indianred', 'Gráfica detección de ceros sin filtrar')
+    # print("2/4")
     y_env_0 = np.abs(sigtool.hilbert(msg_0))
 
     if filtro == True:
-        print("3/4")
+        # print("3/4")
         h_0 = firwin(numtaps=100, cutoff=0.4 * fs, nyq=fs)
-        print("4/4")
+        # print("4/4")
         senal_filtrada_0 = lfilter(h_0, 1.0, y_env_0)
     else:
         senal_filtrada_0 = y_env_0
 
-    print(len(senal_filtrada_0))
-    print("correl c1")
-
-    print("1/4")
+    # print(len(senal_filtrada_0))
+    # print("correl c1")
+    # print("1/4")
     msg_1 = np.correlate(senal, C1)
-    print("2/4")
+    # print("2/4")
     y_env_1 = np.abs(sigtool.hilbert(msg_1))
 
     if filtro == True:
-        print("3/4")
+        # print("3/4")
         h_1 = firwin(numtaps=100, cutoff=0.4 * fs, nyq=fs)
-        print("4/4")
+        # print("4/4")
         senal_filtrada_1 = lfilter(h_1, 1.0, y_env_1)
     else:
         senal_filtrada_1 = y_env_1
 
-    print("graficas")
+    # print("graficas")
 
-    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal)), senal, 'indianred', 'Señal FSK original')
-    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(msg_0)), msg_0, 'indianred', 'Gráfica detección de ceros sin filtrar')
-    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(msg_1)), msg_1, 'indianred', 'Gráfica detección de unos sin filtrar')
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal)), senal, 'indianred', 'Señal FSK original')
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(msg_0)), msg_0, 'indianred', 'Gráfica detección de ceros sin filtrar')
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(msg_1)), msg_1, 'indianred', 'Gráfica detección de unos sin filtrar')
 
-    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(y_env_0)), y_env_0, 'indianred', 'Gráfica detección de ceros filtrada')
-    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(y_env_1)), y_env_1, 'indianred', 'Gráfica detección de unos filtrada')
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(y_env_0)), y_env_0, 'indianred', 'Gráfica detección de ceros filtrada')
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(y_env_1)), y_env_1, 'indianred', 'Gráfica detección de unos filtrada')
 
-    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_0)), senal_filtrada_0, 'indianred', 'Gráfica detección de ceros filtrada')
-    #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_1)), senal_filtrada_1, 'indianred', 'Gráfica detección de unos filtrada')
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_0)), senal_filtrada_0, 'indianred', 'Gráfica detección de ceros filtrada')
+    # graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_1)), senal_filtrada_1, 'indianred', 'Gráfica detección de unos filtrada')
 
-    print(len(senal_filtrada_1))
-    print("resta")
+    # print(len(senal_filtrada_1))
+    # print("resta")
     senal_filtrada_final = np.subtract(senal_filtrada_1,senal_filtrada_0)
 
     #graficar_tiempo(np.linspace(0, Tb * aproxCantBits, len(senal_filtrada_final)), senal_filtrada_final, 'indianred', 'Señal FSK filtrada')
 
     largo_final = len(senal_filtrada_final)
     largo_fragmento = cantMuestras * (len(senal_filtrada_final) / len(senal))
-    print(cantMuestras)
-    print(len(senal_filtrada_final))
-    print(len(senal))
-    print(len(senal_filtrada_final) / len(senal))
+    # print(cantMuestras)
+    # print(len(senal_filtrada_final))
+    # print(len(senal))
+    # print(len(senal_filtrada_final) / len(senal))
 
     msg_binario = []
 
@@ -303,10 +304,10 @@ def demodulacion_digital_fsk(senal, fc1, fc2, Tb, fs, filtro = False):
     posActual = seccionBorde
     #largo_fragmento *= 1
 
-    print("divisor")
-    print(posActual)
-    print(round(posActual))
-    print(largo_fragmento)
+    # print("divisor")
+    # print(posActual)
+    # print(round(posActual))
+    # print(largo_fragmento)
     #print(senal_filtrada_final[0:int(largo_fragmento * 5)])
 
     while posActual < largo_final:
@@ -336,9 +337,9 @@ def demodulacion_digital_fsk(senal, fc1, fc2, Tb, fs, filtro = False):
             posActual += largo_fragmento
         #print(posActual)
 
-    print(len(senal_filtrada_final))
-    print(seccionBorde)
-    print(posActual)
+    # print(len(senal_filtrada_final))
+    # print(seccionBorde)
+    # print(posActual)
     if ((posActual-largo_fragmento+seccionBorde) < len(senal_filtrada_final)) & (senal_filtrada_final[int(round(len(senal_filtrada_final)-seccionBorde))] > 0):
         msg_binario.append(1)
     elif ((posActual-largo_fragmento+seccionBorde) < len(senal_filtrada_final)) & (senal_filtrada_final[int(round(len(senal_filtrada_final)-seccionBorde))] < 0):
@@ -375,7 +376,7 @@ def demodulacion_digital_fsk_2(senal, Tb, Tt, fs):
         else:
             msg_binario.append(0)
 
-    print(msg_binario)
+    # print(msg_binario)
     return msg_binario
 
 def convertirBMPWAV(imagen, audio):
@@ -425,9 +426,13 @@ def colocarFlags(senal, flag):
     resultado.extend(flag)
     return resultado
 
-def sacarFlags(senal, flag):
+def sacarFlags(senal, binary_flag):
+    limits = []
+    for x in range(len(senal)):
+        if senal[x:x+len(binary_flag)] == binary_flag:
+            limits.append(x)
 
-    return senal[len(flag):len(senal)-len(flag)]
+    return senal[(limits[0]+len(binary_flag)):limits[1]]
 
 def main():
     n_bits = 9
@@ -440,36 +445,49 @@ def main():
 
     fs, array_prueba, rango_senal, freqs, t = leer_audio(nombreAudio)
 
-    flag = [301, 330, 333]
+    # flag en binario = 111100001 111000011 110000111 100001111
+    flag = [481, 451, 391, 271]
 
-    #print(array_prueba)
+    array_prueba_flag = colocarFlags(array_prueba, flag)
+    print('largo sin = {:f} largo con = {:f}'.format(len(array_prueba), len(array_prueba_flag)))
+    array_prueba_bin = conversion_binaria(array_prueba_flag, formato_bin)  #array_prueba_flag
+    print('n bits = {:f} 8 * len = {:f}'.format(len(array_prueba_bin), 9 * len(array_prueba_flag)))
 
-    #array_prueba_flag = colocarFlags(array_prueba, flag)
-    #print(array_prueba_flag)
-    array_prueba_bin = conversion_binaria(array_prueba, formato_bin)  #array_prueba_flag
-    print(array_prueba_bin)
+
 
     fc = 4000
     fc2 = 8000
     Tb = 0.001  # s
     amplitud = 1
-    fs = 50000
+    fs = 70000
 
     tprueba2, array_prueba_fsk = modulacion_digital_fsk(array_prueba_bin, fc, fc2, Tb, amplitud, fs)
 
     scipy.io.wavfile.write('mario_fsk.wav', fs, np.array(array_prueba_fsk))
 
     array_prueba_demod = demodulacion_digital_fsk(np.array(array_prueba_fsk), fc, fc2, Tb, fs)
-    #print(array_prueba_demod)
-    #array_prueba_debin
-    array_final = deconversion_binaria(array_prueba_demod, n_bits)
-    #array_final = sacarFlags(array_prueba_debin, flag)
+    # print(array_prueba_demod)
+    # array_prueba_debin
+
+    len(array_prueba_bin)
+    len(array_prueba_demod)
+    print(array_prueba_bin)
+    print(array_prueba_demod)
+
+    array_prueba_deflag = sacarFlags(array_prueba_demod, conversion_binaria(flag, formato_bin))
+    array_final = deconversion_binaria(array_prueba_deflag, n_bits)
+
+    # print(array_final)
+
+    len(array_prueba)
+    len(array_final)
+    print(array_prueba)
     print(array_final)
 
-    #print(array_prueba_bin[-20:])
-    #print(array_prueba_fsk[-20:])
     print("prueba error")
-    print(np.sum(np.absolute(np.array(array_final) - np.array(array_prueba))))
+    print(np.sum(np.absolute(np.array(array_prueba_bin) - np.array(array_prueba_demod))))
+
+    print(np.sum(np.absolute(np.array(array_prueba) - np.array(array_final))))
 
     exit()
 
@@ -482,7 +500,7 @@ def main():
     # array_prueba = np.random.random_integers(0,1,16)
     array_prueba = (1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1)
 
-    print(array_prueba)
+    # print(array_prueba)
 
     # fc = 200000 (este valor esta bien para el lab)
     fc = 2000
@@ -513,7 +531,7 @@ def main():
     scipy.io.wavfile.write('modulacion_fsk.wav', fs2, prueba2)
 
     exit()
-    print(fs)
+    # print(fs)
 
     fftAudioOriginal = transformada(senal)
     ifftAudioOriginal = transformada_inversa(fftAudioOriginal)
