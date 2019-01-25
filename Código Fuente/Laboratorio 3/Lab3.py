@@ -426,6 +426,7 @@ def colocarFlags(senal, flag):
     return resultado
 
 def sacarFlags(senal, flag):
+
     return senal[len(flag):len(senal)-len(flag)]
 
 def main():
@@ -441,11 +442,11 @@ def main():
 
     flag = [301, 330, 333]
 
-    print(array_prueba)
+    #print(array_prueba)
 
-    array_prueba_flag = colocarFlags(array_prueba, flag)
-    print(array_prueba_flag)
-    array_prueba_bin = conversion_binaria(array_prueba_flag, formato_bin)
+    #array_prueba_flag = colocarFlags(array_prueba, flag)
+    #print(array_prueba_flag)
+    array_prueba_bin = conversion_binaria(array_prueba, formato_bin)  #array_prueba_flag
     print(array_prueba_bin)
 
     fc = 4000
@@ -459,14 +460,14 @@ def main():
     scipy.io.wavfile.write('mario_fsk.wav', fs, np.array(array_prueba_fsk))
 
     array_prueba_demod = demodulacion_digital_fsk(np.array(array_prueba_fsk), fc, fc2, Tb, fs)
-    print(array_prueba_demod)
-    array_prueba_debin = deconversion_binaria(array_prueba_demod, n_bits)
-    print(array_prueba_debin)
-    array_final = sacarFlags(array_prueba_debin, flag)
+    #print(array_prueba_demod)
+    #array_prueba_debin
+    array_final = deconversion_binaria(array_prueba_demod, n_bits)
+    #array_final = sacarFlags(array_prueba_debin, flag)
     print(array_final)
 
-    print(array_prueba_bin[-20:])
-    print(array_prueba_fsk[-20:])
+    #print(array_prueba_bin[-20:])
+    #print(array_prueba_fsk[-20:])
     print("prueba error")
     print(np.sum(np.absolute(np.array(array_final) - np.array(array_prueba))))
 
