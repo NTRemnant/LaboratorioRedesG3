@@ -112,17 +112,17 @@ def multi_grafico_tiempo(rango, senal_1, title_1, senal_2, title_2, senal_3, tit
     mplot.plot(rango, senal_4, 'indianred')
     mplot.show()
 
-def conversion_binaria(senal):
+def conversion_binaria(senal, formato):
     resultado = []
     for i in senal:
-        bin_array = '{:08b}'.format(i)
+        bin_array = formato.format(i)
         for bit in bin_array:
             resultado.append(int(bit))
     return resultado
 
-def deconversion_binaria(bin_data):
+def deconversion_binaria(bin_data, n_bits):
     data = []
-    exp = 7
+    exp = n_bits - 1
     dec_value = 0
     for i in bin_data:
         dec_value += (i * (2 ** exp))
@@ -131,7 +131,7 @@ def deconversion_binaria(bin_data):
         else:
             data.append(dec_value)
             dec_value = 0
-            exp = 7
+            exp = n_bits - 1
     return data
 
 def generador_ruido(senal, A):
@@ -420,14 +420,17 @@ def convertirBMPWAV(imagen, audio):
 def main():
 
     senal = [24, 4, 54, 0, 2]
+    n_bits = 9
+    formato_bin = '{:09b}'
 
-    bin_data = conversion_binaria(senal)
-    da_dart = deconversion_binaria(bin_data)
+    bin_data = conversion_binaria(senal, formato_bin)
+    da_dart = deconversion_binaria(bin_data, n_bits)
 
     print(senal)
     print(bin_data)
     print(da_dart)
-  
+
+    exit()
     nombreImagen = "mario.bmp"
     nombreAudio = "salidamario.wav"
 
