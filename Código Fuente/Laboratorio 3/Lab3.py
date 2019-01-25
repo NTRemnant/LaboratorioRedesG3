@@ -417,38 +417,36 @@ def convertirBMPWAV(imagen, audio):
 
     wav.close()
 
-def main():
 
-    senal = [24, 4, 54, 0, 2]
+def colocarFlags(senal, flag):
+    resultado = []
+    resultado.extend(flag)
+    resultado.extend(senal)
+    resultado.extend(flag)
+    return resultado
+
+def sacarFlags(senal, flag):
+    return senal[len(flag):len(senal)-len(flag)]
+
+def main():
     n_bits = 9
     formato_bin = '{:09b}'
 
-    bin_data = conversion_binaria(senal, formato_bin)
-    da_dart = deconversion_binaria(bin_data, n_bits)
-
-    print(senal)
-    print(bin_data)
-    print(da_dart)
-
-    exit()
     nombreImagen = "mario.bmp"
     nombreAudio = "salidamario.wav"
 
-    print("lectura")
     convertirBMPWAV(nombreImagen, nombreAudio)
-
-    print("lect")
 
     fs, array_prueba, rango_senal, freqs, t = leer_audio(nombreAudio)
 
-    #array_prueba_bin = np.array(np.random.random_integers(0, 1, 100))
-    # print(array_prueba_bin)
-    # array_prueba_bin = (1, 0, 1, 0, 0, 0 , 0, 0, 1, 1, 0, 1, 1, 1, 1,1,1, 0, 0, 1, 1)
-    print("bin")
-    array_prueba_bin = conversion_binaria(array_prueba)
-    # print(len(array_prueba))
-    print(len(array_prueba_bin))
-    # print(fs)
+    flag = [301, 330, 333]
+
+    print(array_prueba)
+
+    array_prueba_flag = colocarFlags(array_prueba, flag)
+    print(array_prueba_flag)
+    array_prueba_bin = conversion_binaria(array_prueba_flag, formato_bin)
+    print(array_prueba_bin)
 
     fc = 4000
     fc2 = 8000
@@ -458,21 +456,19 @@ def main():
 
     tprueba2, array_prueba_fsk = modulacion_digital_fsk(array_prueba_bin, fc, fc2, Tb, amplitud, fs)
 
-    print(len(array_prueba_fsk))
-
-    print("fin fsk")
-
     scipy.io.wavfile.write('mario_fsk.wav', fs, np.array(array_prueba_fsk))
-    # exit()
 
-    array_final = demodulacion_digital_fsk(np.array(array_prueba_fsk), fc, fc2, Tb, fs)
-    # print(array_prueba_bin)
+    array_prueba_demod = demodulacion_digital_fsk(np.array(array_prueba_fsk), fc, fc2, Tb, fs)
+    print(array_prueba_demod)
+    array_prueba_debin = deconversion_binaria(array_prueba_demod, n_bits)
+    print(array_prueba_debin)
+    array_final = sacarFlags(array_prueba_debin, flag)
+    print(array_final)
 
     print(array_prueba_bin[-20:])
-    print(array_final[-20:])
-
+    print(array_prueba_fsk[-20:])
     print("prueba error")
-    print(np.sum(np.absolute(np.array(array_final) - np.array(array_prueba_bin))))
+    print(np.sum(np.absolute(np.array(array_final) - np.array(array_prueba))))
 
     exit()
 
